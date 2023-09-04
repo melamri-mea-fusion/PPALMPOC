@@ -9,7 +9,7 @@ on:
       solution_name:
         description: 'name of the solution to worked on from Power Platform'
         required: true
-        default: ALMLab
+        default: PPALMPOC
        #Do Not change these values
       solution_exported_folder:
         description: 'folder name for staging the exported solution *do not change*'
@@ -25,9 +25,9 @@ on:
        default: solutions/
 env:
 #edit your values here
-  ENVIRONMENT_URL: '<ENVIRONMENTURL>'
-  CLIENT_ID: '<APPID>'
-  TENANT_ID: '<TENANT ID>'
+  ENVIRONMENT_URL: 'https://org30b06aab.crm4.dynamics.com'
+  CLIENT_ID: '4bf59db1-3f93-48dc-a75c-d2a2e9a6ed75'
+  TENANT_ID: 'd57f6302-e7b3-487f-b17a-5f7f14c6228e'
 permissions:
   contents: write
 jobs:
@@ -41,6 +41,8 @@ jobs:
     - uses: actions/checkout@v2
       with:
         lfs: true
+    - name: Power Platform Action Install
+      uses: microsoft/powerplatform-actions/actions-install@v1
 
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@v1
