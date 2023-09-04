@@ -24,7 +24,6 @@ on:
        required: true
        default: solutions/
 env:
-#edit your values here
   ENVIRONMENT_URL: 'https://org30b06aab.crm4.dynamics.com'
   CLIENT_ID: '4bf59db1-3f93-48dc-a75c-d2a2e9a6ed75'
   TENANT_ID: 'd57f6302-e7b3-487f-b17a-5f7f14c6228e'
@@ -41,5 +40,31 @@ jobs:
       with:
         environment-url: ${{env.ENVIRONMENT_URL}}
         app-id: ${{env.CLIENT_ID}}
-        client-secret: ${{ secrets.SPN }}
+        client-secret: ${{ secrets.SPN}}
         tenant-id: ${{env.TENANT_ID}}
+
+    - name: export-solution action
+      uses: microsoft/powerplatform-actions/export-solution@v1
+      with:
+        environment-url: ${{env.ENVIRONMENT_URL}}
+        app-id: ${{env.CLIENT_ID}}
+        client-secret: ${{ secrets.PowerPlatformSPN }}
+        tenant-id: ${{env.TENANT_ID}}
+        solution-name: ${{ github.event.inputs.solution_name }}
+        solution-output-file: ${{ github.event.inputs.solution_exported_folder}}/${{ github.event.inputs.solution_name }}.zip
+
+    - name: unpack-solution action
+      uses: microsoft/powerplatform-actions/unpack-solution@v1
+      with:
+        solution-file: ${{ github.event.inputs.solution_exported_folder}}/${{ github.event.inputs.solution_name }}.zip
+        solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
+        solution-type: 'Unmanaged'
+        overwrite-files: true
+
+    - name: branch-solution, prepare it for a PullRequest
+      uses: microsoft/powerplatform-actions/branch-solution@v1
+      with:
+        solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
+        solution-target-folder: ${{ github.event.inputs.solution_target_folder}}/${{ github.event.inputs.solution_name }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        allow-empty-commit: true
