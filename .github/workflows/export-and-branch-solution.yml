@@ -31,8 +31,10 @@ permissions:
   contents: write
 jobs:
   export-from-dev:
-    runs-on: self-hosted
+     runs-on: self-hosted
     steps:
+    - name: Power Platform Action Install
+      uses: microsoft/powerplatform-actions/actions-install@latest
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@latest
       with:
