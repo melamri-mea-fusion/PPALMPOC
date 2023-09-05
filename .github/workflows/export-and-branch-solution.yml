@@ -35,13 +35,6 @@ jobs:
     steps:
     - name: Power Platform Action Install
       uses: microsoft/powerplatform-actions/actions-install@latest
-    - name: who-am-i action
-      uses: microsoft/powerplatform-actions/who-am-i@latest
-      with:
-        environment-url: ${{env.ENVIRONMENT_URL}}
-        app-id: ${{env.CLIENT_ID}}
-        client-secret: ${{secrets.SPN}}
-        tenant-id: ${{env.TENANT_ID}}
 
     - name: export-solution action
       uses: microsoft/powerplatform-actions/export-solution@latest
@@ -62,9 +55,9 @@ jobs:
         overwrite-files: true
 
     - name: branch-solution, prepare it for a PullRequest
-      uses: microsoft/powerplatform-actions/branch-solution@latest
+      uses: microsoft/powerplatform-actions/branch-solution@v0
       with:
         solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
-        solution-target-folder: ${{ github.event.inputs.solution_target_folder}}/${{ github.event.inputs.solution_name }}
+        solution-target-folder: 'src/solutions'
         repo-token: ${{ secrets.GITHUB_TOKEN }}
         allow-empty-commit: true
