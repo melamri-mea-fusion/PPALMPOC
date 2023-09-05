@@ -114,6 +114,8 @@ jobs:
       with:
         name: managedSolutions
         path: ${{ inputs.solution_release_folder}}
+    - name: Power Platform Action Install
+      uses: microsoft/powerplatform-actions/actions-install@v1
     - name: Import solution to prod env
       uses: microsoft/powerplatform-actions/import-solution@v1
       with:
