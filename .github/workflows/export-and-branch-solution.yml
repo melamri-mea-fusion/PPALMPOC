@@ -65,6 +65,6 @@ jobs:
       uses: microsoft/powerplatform-actions/branch-solution@latest
       with:
         solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
-        solution-target-folder: 'src/solutions'
-        token: ${{ secrets.GITHUB_TOKEN }}
+        solution-target-folder: ${{ github.event.inputs.solution_target_folder}}/${{ github.event.inputs.solution_name }}
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
         allow-empty-commit: true
