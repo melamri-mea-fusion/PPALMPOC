@@ -31,7 +31,7 @@ permissions:
   contents: write
 jobs:
   export-from-dev:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
     - name: who-am-i action
       uses: microsoft/powerplatform-actions/who-am-i@latest
