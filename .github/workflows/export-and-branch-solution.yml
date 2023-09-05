@@ -31,7 +31,7 @@ permissions:
   contents: write
 jobs:
   export-from-dev:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Power Platform Action Install
       uses: microsoft/powerplatform-actions/actions-install@v1
