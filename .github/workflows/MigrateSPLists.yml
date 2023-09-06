@@ -1,0 +1,12 @@
+name: Migrate SP Lists
+on: [workflow_dispatch]
+
+jobs:
+    build:
+      name: Run Script
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v3
+        - name: Script
+          run: .\migrateList.ps1
+          shell: powershell
