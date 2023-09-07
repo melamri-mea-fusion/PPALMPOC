@@ -9,6 +9,7 @@ jobs:
         - name: Script
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+              MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
           run: .\migrateList.ps1
           shell: powershell
         
