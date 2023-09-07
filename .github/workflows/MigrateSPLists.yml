@@ -5,6 +5,7 @@ jobs:
       name: Run Script
       runs-on: windows-latest
       steps:
+        - uses: actions/checkout@v3
         - name: Script
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
