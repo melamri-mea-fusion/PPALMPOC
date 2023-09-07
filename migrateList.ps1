@@ -11,11 +11,11 @@ Write-Output "PFX file generated ... OK"
 Connect-PnPOnline -ClientId '9afea424-5d73-428b-b9ea-e0d87d400831' -CertificatePath $pfxFileName -CertificatePassword (ConvertTo-SecureString -AsPlainText $Env:MEAFUSION_PFX_PASSWORD -Force) -Url https://meafusion.sharepoint.com/sites/DEV -Tenant "meafusion.onmicrosoft.com" 
 Write-Output "Connect to the Source Site ... OK"
 
-Get-PnPSiteTemplate -Out "TemplateFile.pnp" -ListsToExtract "Gift ideas" -Handlers Lists
+Get-PnPSiteTemplate -Out "TemplateFile.xml" -ListsToExtract "Gift ideas" -Handlers Lists
 Write-Output "Create the Template ... OK"
 
 Connect-PnPOnline -ClientId '9afea424-5d73-428b-b9ea-e0d87d400831' -CertificatePath $pfxFileName -CertificatePassword (ConvertTo-SecureString -AsPlainText $Env:MEAFUSION_PFX_PASSWORD -Force) -Url https://meafusion.sharepoint.com/sites/UAT -Tenant "meafusion.onmicrosoft.com" 
 Write-Output "Connect to Target Site ... OK"
 
-Invoke-PnPSiteTemplate -Path "TemplateFile.pnp"
+Invoke-PnPSiteTemplate -Path "TemplateFile.xml"
 Write-Output "Apply the Template ... OK"
