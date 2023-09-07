@@ -127,4 +127,4 @@ jobs:
         force-overwrite: true
         publish-changes: true
         use-deployment-settings-file: true
-        deployment-settings-file: "./deployment-settings/settings.json"
+        deployment-settings-file: "./deployment-setting/settings.json"
