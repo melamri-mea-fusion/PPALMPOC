@@ -1,3 +1,4 @@
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Install-Module -Name "PnP.PowerShell"
 Import-Module PnP.PowerShell
 #Connect to the Source Site
