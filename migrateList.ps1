@@ -1,4 +1,4 @@
-$env:PNPPOWERSHELL_UPDATECHECK=off
+$env:PNPPOWERSHELL_UPDATECHECK=false
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Install-Module -Name "PnP.PowerShell" -RequiredVersion 1.12.0 -Force -AllowClobber
 Import-Module PnP.PowerShell
