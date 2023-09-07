@@ -6,12 +6,9 @@ jobs:
       runs-on: windows-latest
       steps:
         - uses: actions/checkout@v3
-        - name: Write key file
+        - name: Script
           env: 
               PFX: ${{ secrets.MEAFUSION_PFX }}
-          run: |
-            echo "$PFX" | base64 --decode > ${HOME}/MEAFUSION.pfx
-        - name: Script
           run: .\migrateList.ps1
           shell: powershell
         
