@@ -5,10 +5,9 @@ jobs:
       name: Run Script
       runs-on: windows-latest
       steps:
-        - uses: actions/checkout@v3
         - name: Script
           env: 
-              PFX: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+              MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
           run: .\migrateList.ps1
           shell: powershell
         
