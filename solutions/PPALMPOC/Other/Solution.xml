@@ -78,7 +78,6 @@
       </Addresses>
     </Publisher>
     <RootComponents>
-      <RootComponent type="1" schemaName="cr2c4_approval" behavior="0" />
       <RootComponent type="300" schemaName="cr2c4_ppalmpoc_d4663" behavior="0" />
     </RootComponents>
     <MissingDependencies />

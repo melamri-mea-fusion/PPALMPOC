@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-  <EntityRelationship Name="business_unit_cr2c4_approval" />
-  <EntityRelationship Name="lk_cr2c4_approval_createdby" />
-  <EntityRelationship Name="lk_cr2c4_approval_modifiedby" />
-  <EntityRelationship Name="owner_cr2c4_approval" />
-  <EntityRelationship Name="team_cr2c4_approval" />
-  <EntityRelationship Name="user_cr2c4_approval" />
-</EntityRelationships>

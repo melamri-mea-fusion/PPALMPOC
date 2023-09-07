@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <CanvasApp xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Name>cr2c4_ppalmpoc_d4663</Name>
-  <AppVersion>2023-09-04T22:57:41Z</AppVersion>
-  <Status>Ready</Status>
+  <AppVersion>2023-09-07T10:35:06Z</AppVersion>
+  <Status>NotReady</Status>
   <CreatedByClientVersion>3.23083.17.0</CreatedByClientVersion>
   <MinClientVersion>3.23083.17.0</MinClientVersion>
-  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23083.17","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false"}</Tags>
+  <Tags>{"primaryDeviceWidth":"1366","primaryDeviceHeight":"768","supportsPortrait":"true","supportsLandscape":"true","primaryFormFactor":"Tablet","showStatusBar":"false","publisherVersion":"3.23083.17","minimumRequiredApiVersion":"2.2.0","hasComponent":"false","hasUnlockedComponent":"false","isUnifiedRootApp":"false","sienaVersion":"20230904T225741Z-3.23083.17.0"}</Tags>
   <IsCdsUpgraded>0</IsCdsUpgraded>
   <GalleryItemId xsi:nil="true"></GalleryItemId>
   <BackgroundColor>RGBA(0,176,240,1)</BackgroundColor>
@@ -14,7 +14,7 @@
   <CommitMessage xsi:nil="true"></CommitMessage>
   <Publisher xsi:nil="true"></Publisher>
   <AuthorizationReferences>[]</AuthorizationReferences>
-  <ConnectionReferences>{}</ConnectionReferences>
+  <ConnectionReferences>{"fd3c8149-fc0e-44df-8a5f-2fb959397ed2":{"id":"/providers/microsoft.powerapps/apis/shared_sharepointonline","displayName":"SharePoint","iconUri":"https://connectoricons-prod.azureedge.net/u/laborbol/partial-builds/ase-v3/1.0.1653.3402/sharepointonline/icon.png","dataSources":["Gift ideas"],"dependencies":[],"dependents":[],"parameterHints":{},"parameterHintsV2":{},"isOnPremiseConnection":false,"bypassConsent":false,"dataSets":{"https://meafusion.sharepoint.com/sites/DEV_cr2c4_shared_sharepointonline_9070c738402f4368b2a4c43921472b7d":{"datasetOverride":{"environmentVariableName":"cr2c4_shared_sharepointonline_9070c738402f4368b2a4c43921472b7d"},"dataSources":{"Gift ideas":{"tableName":"425fdbc8-0c60-4584-9aca-bbc2efea81c6","tableNameOverride":{"environmentVariableName":"cr2c4_shared_sharepointonline_6fabbc59b77b45b988a1876d978f1983"}}}}},"apiTier":"Standard","actions":["providers/PowerPlatform.Governance/Operations/Read"]}}</ConnectionReferences>
   <DatabaseReferences>{}</DatabaseReferences>
   <AppComponents>[]</AppComponents>
   <AppComponentDependencies>[]</AppComponentDependencies>
@@ -24,7 +24,7 @@
   <AdminControlBypassConsent>0</AdminControlBypassConsent>
   <EmbeddedApp xsi:nil="true"></EmbeddedApp>
   <IntroducedVersion>1.0</IntroducedVersion>
-  <CdsDependencies>{"cdsdependencies":[]}</CdsDependencies>
+  <CdsDependencies>{"cdsdependencies":[{"logicalname":"cr2c4_shared_sharepointonline_9070c738402f4368b2a4c43921472b7d","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"},{"logicalname":"cr2c4_shared_sharepointonline_6fabbc59b77b45b988a1876d978f1983","componenttype":380,"componenttypeplatformname":"EnvironmentVariableDefinition"}]}</CdsDependencies>
   <IsCustomizable>1</IsCustomizable>
   <BackgroundImageUri>/CanvasApps/cr2c4_ppalmpoc_d4663_BackgroundImageUri</BackgroundImageUri>
   <DocumentUri>/CanvasApps/cr2c4_ppalmpoc_d4663_DocumentUri.msapp</DocumentUri>
