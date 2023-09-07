@@ -8,7 +8,7 @@ jobs:
         - uses: actions/checkout@v3
         - name: Script
           env: 
-              PFX: ${{ secrets.MEAFUSION_PFX }}
+              PFX: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
           run: .\migrateList.ps1
           shell: powershell
         
