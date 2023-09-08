@@ -4,8 +4,13 @@ on:
     inputs:
           ENVIRONMENT:
                 required: true
-                type: string    
-
+                type: string 
+    secrets:
+            MEAFUSION_PFX_PASSWORD:
+              required: true
+            MEAFUSION_PFX:
+              required: true
+  
 jobs:
     SP_Lists_Migration:
       name: Run SP Migration Script
