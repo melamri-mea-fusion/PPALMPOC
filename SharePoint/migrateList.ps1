@@ -3,8 +3,6 @@ Import-Module PnP.PowerShell
 Write-Output "PnP.PowerShell Imported ... OK"
 
 $pfxFileName = '.\MEAFUSION.pfx'
-Write-Output "DEBUG"
-Write-Output $Env:MEAFUSION_PFX
 $bytes = [Convert]::FromBase64String($Env:MEAFUSION_PFX)
 [IO.File]::WriteAllBytes($pfxFileName, $bytes)
 Write-Output "PFX file generated ... OK"
