@@ -11,8 +11,6 @@ jobs:
     outputs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
       SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
-    steps:
-      - run: echo "null"
   DeployUAT:
     needs: [get-env-vars]
     name: Deploy to UAT 
