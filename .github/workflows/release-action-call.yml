@@ -8,8 +8,6 @@ on:
 permissions:
   contents: write
 jobs:
-  Migrate-SP-Lists: 
-    uses: ./.github/workflows/MigrateSPLists.yml
   Release-solution-ALMLab:
     uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
     with:
