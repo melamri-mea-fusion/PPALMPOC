@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-later
     outputs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
-      SP_SITE_TARGET: ${{env.SHAREPOINT_TARGET_SITE}}
+      SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
     steps:
       - run: echo "null"
   DeployUAT:
