@@ -7,7 +7,7 @@ on:
 jobs:
   get-env-vars:
     name: Get Environment vars
-    runs-on: windows-later
+    runs-on: windows-latest
     outputs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
       SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
