@@ -5,6 +5,12 @@ on:
           ENVIRONMENT:
                 required: true
                 type: string
+          SHAREPOINT_SOURCE_SITE:
+                required: true
+                type: string
+          SHAREPOINT_TARGET_SITE:
+                required: true
+                type: string
     secrets:
             MEAFUSION_PFX_PASSWORD:
               required: true
