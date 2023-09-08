@@ -1,9 +1,13 @@
 name: Migrate SP Lists
-on: [workflow_dispatch]
+on:
+    pull_request:
+        branches: [ main ]
 jobs:
     build:
-      name: Run Script
+      name: Run SP Migration Script
       runs-on: windows-latest
+      environment: 
+          name: UAT
       steps:
         - uses: actions/checkout@v3
         - name: Install and cache PowerShell modules
@@ -15,6 +19,8 @@ jobs:
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
               MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
+              SP_SITE_SOURCE: ${{env.SHAREPOINT_DEV}}
+              SP_SITE_TARGET: ${{env.SHAREPOINT_UAT}}
           run: .\SharePoint\migrateList.ps1
           shell: powershell
         
