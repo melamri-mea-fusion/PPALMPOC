@@ -3,7 +3,7 @@ on:
   workflow_call:
 
 jobs:
-    build:
+    SP_Lists_Migration:
       name: Run SP Migration Script
       runs-on: windows-latest
       steps:
