@@ -1,0 +1,33 @@
+name: CI + CD
+
+on:
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  Build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+      
+  DeployUAT:
+    name: Deploy to UAT 
+    needs: [Build]
+    runs-on: windows-latest
+    environment: 
+      name: UAT
+    steps:
+      - name: Deploy
+        uses: ./.github/workflows/MigrateSPLists.yml
+            
+  DeployProd:
+    name: Deploy to Production 
+    needs: [DeployUAT]
+    runs-on: windows-latest
+    environment: 
+      name: PROD
+    steps:
+      - name: Deploy
+        uses: ./.github/workflows/MigrateSPLists.yml 
+    
