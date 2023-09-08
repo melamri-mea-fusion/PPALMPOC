@@ -3,8 +3,7 @@ name: CI + CD
 on:
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
-
+    
 jobs:      
   DeployUAT:
     name: Deploy to UAT 
@@ -12,8 +11,6 @@ jobs:
     environment: 
       name: UAT
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
       - name: Deploy
         uses: ./.github/workflows/MigrateSPLists.yml
             
@@ -24,8 +21,6 @@ jobs:
     environment: 
       name: PROD
     steps:
-    - name: checkout
-      uses: actions/checkout@v3
     - name: Deploy
       uses: ./.github/workflows/MigrateSPLists.yml
     
