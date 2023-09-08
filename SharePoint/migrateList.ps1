@@ -1,5 +1,3 @@
-Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
-Install-Module -Name "PnP.PowerShell" -RequiredVersion 1.12.0
 Import-Module PnP.PowerShell
 Write-Output "PnP.PowerShell Imported ... OK"
 
