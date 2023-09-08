@@ -9,11 +9,16 @@ jobs:
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
-          ENVIRONMENT: UAT       
+      ENVIRONMENT: UAT
+    secrets: 
+      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
   DeployProd:
     name: Deploy to Production 
     needs: [DeployUAT]
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
           ENVIRONMENT: PROD      
-    
+    secrets: 
+      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
