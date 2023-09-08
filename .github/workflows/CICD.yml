@@ -7,24 +7,13 @@ on:
 jobs:      
   DeployUAT:
     name: Deploy to UAT 
-    runs-on: windows-latest
-    environment: 
-      name: UAT
-    steps:
-     - name: Check out repository
-       uses: actions/checkout@v3
-     - name: Deploy
-       uses: ./.github/workflows/MigrateSPLists.yml
-            
+    uses: ./.github/workflows/MigrateSPLists.yml
+    with:
+          ENVIRONMENT: UAT       
   DeployProd:
     name: Deploy to Production 
     needs: [DeployUAT]
-    runs-on: windows-latest
-    environment: 
-      name: PROD
-    steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
-    - name: Deploy
-      uses: ./.github/workflows/MigrateSPLists.yml
+    uses: ./.github/workflows/MigrateSPLists.yml
+    with:
+          ENVIRONMENT: PROD      
     
