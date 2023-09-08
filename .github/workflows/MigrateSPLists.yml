@@ -1,5 +1,6 @@
 name: Migrate SP Lists
-on: [workflow_dispatch]
+on:
+  workflow_call:
 
 jobs:
     build:
