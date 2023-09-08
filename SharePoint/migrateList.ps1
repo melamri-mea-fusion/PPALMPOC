@@ -8,19 +8,19 @@ $bytes = [Convert]::FromBase64String($Env:MEAFUSION_PFX)
 [IO.File]::WriteAllBytes($pfxFileName, $bytes)
 Write-Output "PFX file generated ... OK"
 
-$lists = Get-Content -Path ".\SharePoint\lists.json" -Raw | ConvertFrom-Json
-foreach ($list in $lists) {
+$listsToMigrate = Get-Content -Path ".\SharePoint\lists.json" -Raw | ConvertFrom-Json
+foreach ($list in $listsToMigrate) {
     Write-Output "$list migration job starting ..."
 
     Connect-PnPOnline -ClientId '9afea424-5d73-428b-b9ea-e0d87d400831' -CertificatePath $pfxFileName -CertificatePassword (ConvertTo-SecureString -AsPlainText $Env:MEAFUSION_PFX_PASSWORD -Force) -Url https://meafusion.sharepoint.com/sites/DEV -Tenant "meafusion.onmicrosoft.com" 
     Write-Output "Connect to the Source Site ... OK"
     
-    Get-PnPSiteTemplate -Out "TemplateFile.xml" -ListsToExtract $list -Handlers Lists
+    Get-PnPSiteTemplate -Out $list+"TemplateFile.xml" -ListsToExtract $list -Handlers Lists
     Write-Output "Create the Template for $list ... OK"
 
     Connect-PnPOnline -ClientId '9afea424-5d73-428b-b9ea-e0d87d400831' -CertificatePath $pfxFileName -CertificatePassword (ConvertTo-SecureString -AsPlainText $Env:MEAFUSION_PFX_PASSWORD -Force) -Url https://meafusion.sharepoint.com/sites/UAT -Tenant "meafusion.onmicrosoft.com" 
     Write-Output "Connect to Target Site ... OK"
 
-    Invoke-PnPSiteTemplate -Path "TemplateFile.xml"
+    Invoke-PnPSiteTemplate -Path $list+"TemplateFile.xml"
     Write-Output "$list migration to Target Site ... OK"
 }
