@@ -1,11 +1,16 @@
 name: Migrate SP Lists
 on:
   workflow_call:
+    inputs:
+          ENVIRONMENT:
+                required: true
+                type: string    
 
 jobs:
     SP_Lists_Migration:
       name: Run SP Migration Script
       runs-on: windows-latest
+      environment: ${{ inputs.ENVIRONMENT }}
       steps:
         - uses: actions/checkout@v3
         - name: Install and cache PowerShell modules
