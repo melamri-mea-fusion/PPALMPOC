@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [ main ]
     
-jobs:      
+jobs:   
   DeployUAT:
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
