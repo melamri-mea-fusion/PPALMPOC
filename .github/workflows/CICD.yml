@@ -13,7 +13,7 @@ jobs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
       SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
     steps:
-      - run: echo ${{env.SHAREPOINT_SOURCE_SITE}} ${{env.SHAREPOINT_TARGET_SITE}}
+      - run: echo "get env vars for UAT ...."
       
   DeployUAT:
     needs: [get-env-vars]
