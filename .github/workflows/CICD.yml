@@ -13,7 +13,7 @@ jobs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
       SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
     steps:
-      - run: echo "null"
+      - run: echo ${{env.SHAREPOINT_SOURCE_SITE}} ${{env.SHAREPOINT_TARGET_SITE}}
       
   DeployUAT:
     needs: [get-env-vars]
@@ -32,8 +32,8 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
           ENVIRONMENT: PROD
-          SHAREPOINT_SOURCE_SITE: ${{  needs.get-env.outputs.SHAREPOINT_SOURCE_SITE }}
-          SHAREPOINT_TARGET_SITE: ${{  needs.get-env.outputs.SHAREPOINT_TARGET_SITE }}
+          SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_SOURCE_SITE }}
+          SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
