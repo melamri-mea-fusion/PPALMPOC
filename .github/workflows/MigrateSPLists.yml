@@ -4,7 +4,13 @@ on:
     inputs:
           ENVIRONMENT:
                 required: true
-                type: string 
+                type: string
+          SHAREPOINT_SOURCE_SITE:
+                required: true
+                type: string
+          SHAREPOINT_TARGET_SITE:
+                required: true
+                type: string
     secrets:
             MEAFUSION_PFX_PASSWORD:
               required: true
@@ -27,8 +33,8 @@ jobs:
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
               MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
-              SP_SITE_SOURCE: ${{env.SHAREPOINT_SOURCE_SITE}}
-              SP_SITE_TARGET: ${{env.SHAREPOINT_TARGET_SITE}}
+              SP_SITE_SOURCE: ${{inputs.SHAREPOINT_SOURCE_SITE}}
+              SP_SITE_TARGET: ${{inputs.SHAREPOINT_TARGET_SITE}}
           run: .\SharePoint\migrateList.ps1
           shell: powershell
         
