@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Deploy
-        uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
+        uses: ./workflows/MigrateSPLists.yml
             
   DeployProd:
     name: Deploy to Production 
@@ -24,5 +24,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Deploy
-      uses: ./.github/workflows/MigrateSPLists.yml
+      uses: ./workflows/MigrateSPLists.yml
     
