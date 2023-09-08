@@ -8,6 +8,7 @@ jobs:
   get-env-vars:
     name: Get Environment vars
     runs-on: windows-latest
+    environment: UAT
     outputs:
       SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
       SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
