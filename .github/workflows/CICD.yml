@@ -10,8 +10,6 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
-      SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
@@ -21,8 +19,6 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
           ENVIRONMENT: PROD
-          SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
-          SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
