@@ -1,4 +1,4 @@
-Get-Module -Name PnP.PowerShell -ListAvailable | Select-Object Path
+Get-Module -Name PnP.PowerShell -ListAvailable | Select Path
 Import-Module PnP.PowerShell
 Write-Output "PnP.PowerShell Imported ... OK"
 
