@@ -10,6 +10,7 @@ jobs:
           uses: potatoqualitee/psmodulecache@v5.2
           with:
            modules-to-cache: PnP.PowerShell:1.12.0
+           shell: powershell
         - name: MigrateSPLists
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
