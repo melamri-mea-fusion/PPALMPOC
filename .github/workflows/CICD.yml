@@ -6,23 +6,27 @@ on:
     
 jobs:   
   DeployUAT:
-    name: Deploy to UAT 
-    uses: ./.github/workflows/MigrateSPLists.yml
-    with:
-      ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  vars.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
-    secrets: 
-      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
-      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
+    name: Deploy to UAT
+    runs-on: windows-latest
+    environment: UAT
+    steps:
+      - name: SP Lists Migration
+        uses: ./.github/workflows/MigrateSPLists.yml
+        with:
+            SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
+            SHAREPOINT_TARGET_SITE: ${{  vars.SHAREPOINT_TARGET_SITE }} 
+            MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+            MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
   DeployProd:
     name: Deploy to Production 
-    needs: [DeployUAT]
-    uses: ./.github/workflows/MigrateSPLists.yml
-    with:
-          ENVIRONMENT: PROD
-          SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
-          SHAREPOINT_TARGET_SITE: ${{  vars.SHAREPOINT_TARGET_SITE }}
-    secrets: 
-      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
-      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
+    needs: [DeployUAT]   
+    runs-on: windows-latest
+    environment: PROD
+    steps:
+      - name: SP Lists Migration
+        uses: ./.github/workflows/MigrateSPLists.yml
+        with:
+            SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
+            SHAREPOINT_TARGET_SITE: ${{  vars.outputs.SHAREPOINT_TARGET_SITE }} 
+            MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+            MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
