@@ -4,25 +4,14 @@ on:
   pull_request:
     branches: [ main ]
     
-jobs:
-  get-env-vars:
-    name: Get Environment vars
-    runs-on: windows-latest
-    environment: UAT
-    outputs:
-      SHAREPOINT_SOURCE_SITE: ${{env.SHAREPOINT_SOURCE_SITE}}
-      SHAREPOINT_TARGET_SITE: ${{env.SHAREPOINT_TARGET_SITE}}
-    steps:
-      - run: echo "get env vars for UAT ...."
-      
+jobs:   
   DeployUAT:
-    needs: [get-env-vars]
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  vars.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
@@ -32,8 +21,8 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
           ENVIRONMENT: PROD
-          SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_SOURCE_SITE }}
-          SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
+          SHAREPOINT_SOURCE_SITE: ${{  vars.SHAREPOINT_SOURCE_SITE }}
+          SHAREPOINT_TARGET_SITE: ${{  vars.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
