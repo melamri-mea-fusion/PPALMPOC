@@ -27,7 +27,6 @@ jobs:
       - run: echo "get env vars for PROD ...."
   
   auto-approve-job:
-    if: github.triggering_actor == 'username-running-automated-workflow-request'
     name: Auto approve job
     needs: get-env-vars-prod
     runs-on: windows-latest
