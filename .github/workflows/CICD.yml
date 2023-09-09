@@ -5,91 +5,71 @@ on:
     branches: [ main ]
     
 jobs:
-  get-env-vars-uat:
-    name: Get Environment vars for UAT
-    runs-on: windows-latest
-    environment: UAT
-    outputs:
-      SHAREPOINT_SOURCE_SITE: ${{vars.SHAREPOINT_SOURCE_SITE}}
-      SHAREPOINT_TARGET_SITE: ${{vars.SHAREPOINT_TARGET_SITE}}
-    steps:
-      - run: echo "get env vars for UAT ...."
-      
-  get-env-vars-prod:
-    needs: DeployUAT
-    name: Get Environment vars for PROD
-    runs-on: windows-latest
-    environment: PROD
-    outputs:
-      SHAREPOINT_SOURCE_SITE: ${{vars.SHAREPOINT_SOURCE_SITE}}
-      SHAREPOINT_TARGET_SITE: ${{vars.SHAREPOINT_TARGET_SITE}}
-    steps:
-      - run: echo "get env vars for PROD ...."
-  
-  auto-approve-job:
-    name: Auto approve job
-    needs: get-env-vars-prod
+  get-env-vars:
+    name: Get Environment vars for each deployment stage
     runs-on: windows-latest
     steps:
-    - name: Get Environment Id
-      id: environment-id
+      - name: retrieve env vars for uat
+      id: uat-id
       shell: pwsh
       run: |
-        $environmentId = ""
-        $url = "https://api.github.com/repos/${{ github.repository }}/environments"
-        $response = Invoke-RestMethod -Uri $url -Method Get  -Headers @{
-          Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-        }
-        if ($response){
-          # Find Environment Id...
-          foreach ($environment in $response.environments) {
-            if ($environment.name -eq "PROD"){
-              $environmentId = $environment.id
-              break
-            }
-          }
-        }
+        $headers = @{
+                  "Accept" = "application/vnd.github+json"
+                  "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                }
 
-        # Set output
-        echo "::set-output name=value::$(echo $environmentId)"
-
-    - name: Show me Environment Id
-      run: |
-        echo "Environment Id for Prod is ${{ steps.environment-id.outputs.value }}"
-    - name: Auto approve
+        $repositoryId = ${{ github.repository }}
+        $environmentName = "UAT"
+        $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
+        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+        # Loop through the variables in the response and set each as an output
+        foreach ($variable in $response.variables) {
+          $variableName = $variable.name
+          $variableValue = $variable.value
+          # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
+          Write-Host "::set-output name=$variableName::$variableValue"
+        }
+      - name: retrieve env vars for PROD
+      id: prod-id
       shell: pwsh
-      run: |        
-        $url = "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/pending_deployments";
-        $body = @"
-        { "environment_ids": [ ${{ steps.environment-id.outputs.value }} ],
-          "state": "approved",
-          "comment": "Auto-approved for automation"
+      run: |
+        $headers = @{
+                  "Accept" = "application/vnd.github+json"
+                  "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                }
+
+        $repositoryId = ${{ github.repository }}
+        $environmentName = "PROD"
+        $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
+        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+        # Loop through the variables in the response and set each as an output
+        foreach ($variable in $response.variables) {
+          $variableName = $variable.name
+          $variableValue = $variable.value
+          # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
+          Write-Host "::set-output name=$variableName::$variableValue"
         }
-        "@;
-        Invoke-RESTMethod -Uri $url -Method POST -Headers @{
-          Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-        } -Body $body -ContentType "application/json"; 
-        
+
   DeployUAT:
-    needs: [get-env-vars-uat]
+    needs: [get-env-vars]
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars-uat.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars-uat.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.steps.uat-id.outputs.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.steps.uat-id.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
       
   DeployProd:
-    needs: [get-env-vars-prod]
+    needs: [DeployUAT]
     name: Deploy to PROD 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars-prod.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars-prod.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.steps.prod-id.outputs.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.steps.prod-id.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
