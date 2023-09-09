@@ -7,6 +7,9 @@ on:
 jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
+    outputs:
+        uat-vars:  ${{ steps.uat-id.outputs.result }}
+        prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
     steps:
       - name: retrieve env vars for uat
@@ -19,13 +22,13 @@ jobs:
                     "Accept" = "application/vnd.github+json"
                     "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
                   }
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables"
+          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_SOURCE_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          # Loop through the variables in the response and set each as an output
-          foreach ($variable in $response.variables) {
-            $variableName = $variable.name
-            $variableValue = $variable.value
-            echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
+          $SHAREPOINT_SOURCE_SITE = $response.value
+          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_TARGET_SITE"
+          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+          $SHAREPOINT_TARGET_SITE = $response.value
+          echo "{result}={{"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}}" >> $GITHUB_OUTPUT
           }
       - name: retrieve env vars for PROD
         id: prod-id
@@ -35,23 +38,22 @@ jobs:
                     "Accept" = "application/vnd.github+json"
                     "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
                   }
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables"
+          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables/SHAREPOINT_SOURCE_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          # Loop through the variables in the response and set each as an output
-          foreach ($variable in $response.variables) {
-            $variableName = $variable.name
-            $variableValue = $variable.value
-            echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
+          $SHAREPOINT_SOURCE_SITE = $response.value
+          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables/SHAREPOINT_TARGET_SITE"
+          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+          $SHAREPOINT_TARGET_SITE = $response.value
+          echo "{result}={{"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}}" >> $GITHUB_OUTPUT
           }
-
   DeployUAT:
     needs: [get-env-vars]
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.steps.uat-id.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.steps.uat-id.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.uat-id.outputs.uat-vars.result.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.uat-id.outputs.uat-vars.result.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
@@ -62,8 +64,8 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.steps.prod-id.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.steps.prod-id.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.prod-id.outputs.uat-vars.result.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.prod-id.outputs.uat-vars.result.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
