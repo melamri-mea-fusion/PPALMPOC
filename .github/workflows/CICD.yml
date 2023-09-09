@@ -34,7 +34,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result 
-          echo "{result}={$result}" >> $GITHUB_OUTPUT
+          echo "{result}={$result }" >> $GITHUB_OUTPUT
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -55,7 +55,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result 
-          echo "{result}={$result}" >> $GITHUB_OUTPUT
+          echo "{result}={$result }" >> $GITHUB_OUTPUT
   DeployUAT:
     needs: [get-env-vars]
     name: Deploy to UAT 
