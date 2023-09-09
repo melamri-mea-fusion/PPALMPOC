@@ -2,9 +2,6 @@ name: Migrate SP Lists
 on:
   workflow_call:
     inputs:
-          ENVIRONMENT:
-                required: true
-                type: string
           SHAREPOINT_SOURCE_SITE:
                 required: true
                 type: string
