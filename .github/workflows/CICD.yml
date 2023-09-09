@@ -34,8 +34,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result
-          echo ::set-output name=result::$result
-          
+          Write-Host "::set-output name=result::$result"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
