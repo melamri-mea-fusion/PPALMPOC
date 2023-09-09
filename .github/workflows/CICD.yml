@@ -8,7 +8,6 @@ jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
     runs-on: windows-latest
-    permissions: environments:read
     steps:
       - name: retrieve env vars for uat
         id: uat-id
