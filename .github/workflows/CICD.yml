@@ -16,6 +16,7 @@ jobs:
       - run: echo "get env vars for UAT ...."
       
   get-env-vars-prod:
+    needs: DeployUAT
     name: Get Environment vars for PROD
     runs-on: windows-latest
     environment: PROD
@@ -82,7 +83,7 @@ jobs:
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
       
   DeployProd:
-    needs: [get-env-vars-prod,DeployUAT]
+    needs: [get-env-vars-prod]
     name: Deploy to PROD 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
