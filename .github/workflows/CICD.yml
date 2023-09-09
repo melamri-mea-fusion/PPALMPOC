@@ -37,9 +37,9 @@ jobs:
       run: |
         $environmentId = ""
         $url = "https://api.github.com/repos/${{ github.repository }}/environments"
-        $response = Invoke-RestMethod -Uri $url -Method Get  -Headers @{
+        $response = Invoke-RestMethod -Uri $url -Method Get -Headers @"{
           Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-        }
+        }"@;
         if ($response){
           # Find Environment Id...
           foreach ($environment in $response.environments) {
@@ -66,9 +66,10 @@ jobs:
           "comment": "Auto-approved for automation"
         }
         "@;
-        Invoke-RESTMethod -Uri $url -Method POST -Headers @{
+        Invoke-RESTMethod -Uri $url -Method POST -Headers  @"{
           Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-        } -Body $body -ContentType "application/json"; 
+        }"@ -Body $body -ContentType "application/json"; 
+
   DeployUAT:
     needs: [get-env-vars-uat]
     name: Deploy to UAT 
