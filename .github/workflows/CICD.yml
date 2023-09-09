@@ -10,12 +10,14 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: retrieve env vars for uat
+        env: # Or as an environment variable
+            CICD_TOKEN: ${{ secrets.CICD_TOKENt }}
         id: uat-id
         shell: pwsh
         run: |
           $headers = @{
                     "Accept" = "application/vnd.github+json"
-                    "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                    "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
                   }
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
@@ -32,7 +34,7 @@ jobs:
         run: |
           $headers = @{
                     "Accept" = "application/vnd.github+json"
-                    "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                    "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
                   }
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
