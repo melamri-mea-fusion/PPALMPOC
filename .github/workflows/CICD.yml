@@ -26,7 +26,9 @@ jobs:
             $variableName = $variable.name
             $variableValue = $variable.value
             # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-            Write-Host "::set-output name=$variableName::$variableValue"
+            echo $variableName
+            echo $variableValue
+            echo "::set-output name=$variableName::$variableValue"
           }
       - name: retrieve env vars for PROD
         id: prod-id
@@ -43,7 +45,9 @@ jobs:
             $variableName = $variable.name
             $variableValue = $variable.value
             # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-            Write-Host "::set-output name=$variableName::$variableValue"
+            echo $variableName
+            echo $variableValue
+            echo "::set-output name=$variableName::$variableValue"
           }
 
   DeployUAT:
