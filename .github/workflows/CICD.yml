@@ -56,18 +56,17 @@ jobs:
           $result = $properties | ConvertTo-Json
           echo $result 
           echo "{result}={$result }" >> $GITHUB_OUTPUT
+  
   DeployUAT:
     needs: [get-env-vars]
+    runs-on: windows-latest
     name: Deploy to UAT 
-    uses: ./.github/workflows/MigrateSPLists.yml
-    with:
-      ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.uat-vars.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.uat-vars.SHAREPOINT_TARGET_SITE }}
-    secrets: 
-      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
-      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
-      
+    steps:
+     - name: x
+       shell: pwsh
+       run: |
+         echo ${{  needs.get-env-vars.outputs }}
+   
   DeployProd:
     needs: [DeployUAT]
     name: Deploy to PROD 
