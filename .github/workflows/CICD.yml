@@ -5,8 +5,8 @@ on:
     branches: [ main ]
     
 jobs:
-  get-env-vars:
-    name: Get Environment vars
+  get-env-vars-uat:
+    name: Get Environment vars for UAT
     runs-on: windows-latest
     environment: UAT
     outputs:
@@ -14,27 +14,37 @@ jobs:
       SHAREPOINT_TARGET_SITE: ${{vars.SHAREPOINT_TARGET_SITE}}
     steps:
       - run: echo "get env vars for UAT ...."
-
+      
+  get-env-vars-prod:
+    name: Get Environment vars for PROD
+    runs-on: windows-latest
+    environment: PROD
+    outputs:
+      SHAREPOINT_SOURCE_SITE: ${{vars.SHAREPOINT_SOURCE_SITE}}
+      SHAREPOINT_TARGET_SITE: ${{vars.SHAREPOINT_TARGET_SITE}}
+    steps:
+      - run: echo "get env vars for PROD ...."
+  
   DeployUAT:
-    needs: [get-env-vars]
+    needs: [get-env-vars-uat]
     name: Deploy to UAT 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: UAT
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars-uat.outputs.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars-uat.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
       
   DeployProd:
-    needs: [DeployUAT]
+    needs: [get-env-vars-prod,DeployUAT]
     name: Deploy to PROD 
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars-prod.outputs.SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars-prod.outputs.SHAREPOINT_TARGET_SITE }}
     secrets: 
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
