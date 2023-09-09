@@ -10,45 +10,45 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: retrieve env vars for uat
-      id: uat-id
-      shell: pwsh
-      run: |
-        $headers = @{
-                  "Accept" = "application/vnd.github+json"
-                  "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-                }
-
-        $repositoryId = ${{ github.repository }}
-        $environmentName = "UAT"
-        $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
-        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-        # Loop through the variables in the response and set each as an output
-        foreach ($variable in $response.variables) {
-          $variableName = $variable.name
-          $variableValue = $variable.value
-          # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-          Write-Host "::set-output name=$variableName::$variableValue"
-        }
+        id: uat-id
+        shell: pwsh
+        run: |
+          $headers = @{
+                    "Accept" = "application/vnd.github+json"
+                    "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                  }
+  
+          $repositoryId = ${{ github.repository }}
+          $environmentName = "UAT"
+          $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
+          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+          # Loop through the variables in the response and set each as an output
+          foreach ($variable in $response.variables) {
+            $variableName = $variable.name
+            $variableValue = $variable.value
+            # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
+            Write-Host "::set-output name=$variableName::$variableValue"
+          }
       - name: retrieve env vars for PROD
-      id: prod-id
-      shell: pwsh
-      run: |
-        $headers = @{
-                  "Accept" = "application/vnd.github+json"
-                  "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
-                }
-
-        $repositoryId = ${{ github.repository }}
-        $environmentName = "PROD"
-        $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
-        $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-        # Loop through the variables in the response and set each as an output
-        foreach ($variable in $response.variables) {
-          $variableName = $variable.name
-          $variableValue = $variable.value
-          # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-          Write-Host "::set-output name=$variableName::$variableValue"
-        }
+        id: prod-id
+        shell: pwsh
+        run: |
+          $headers = @{
+                    "Accept" = "application/vnd.github+json"
+                    "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
+                  }
+  
+          $repositoryId = ${{ github.repository }}
+          $environmentName = "PROD"
+          $url = "https://api.github.com/repositories/$repositoryId/environments/$environmentName/variables"
+          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
+          # Loop through the variables in the response and set each as an output
+          foreach ($variable in $response.variables) {
+            $variableName = $variable.name
+            $variableValue = $variable.value
+            # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
+            Write-Host "::set-output name=$variableName::$variableValue"
+          }
 
   DeployUAT:
     needs: [get-env-vars]
