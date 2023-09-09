@@ -17,7 +17,7 @@ jobs:
                     "Accept" = "application/vnd.github+json"
                     "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
                   }
-          $url = "https://api.github.com/repositories/${{ github.repository }}/environments/UAT/variables"
+          $url = "https://api.github.com/repositories/${{ github.repository.id }}/environments/UAT/variables"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           # Loop through the variables in the response and set each as an output
           foreach ($variable in $response.variables) {
@@ -34,7 +34,7 @@ jobs:
                     "Accept" = "application/vnd.github+json"
                     "Authorization" = "Bearer ${{ secrets.GITHUB_TOKEN }}"
                   }
-          $url = "https://api.github.com/repositories/${{ github.repository }}/environments/PROD/variables"
+          $url = "https://api.github.com/repositories/${{ github.repository.id }}/environments/PROD/variables"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           # Loop through the variables in the response and set each as an output
           foreach ($variable in $response.variables) {
