@@ -33,8 +33,9 @@ jobs:
                 SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
               }
           $result = $properties | ConvertTo-Json
-          echo $result 
-          echo "{result}={$result }" >> $GITHUB_OUTPUT
+          echo $result
+          echo ::set-output name=result::$result
+          
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -64,8 +65,7 @@ jobs:
     steps:
      - name: x
        shell: pwsh
-       run: |
-         $needs | Format-List
+       run: echo ${{  needs.get-env-vars.outputs.uat-vars.SHAREPOINT_SOURCE_SITE }}
    
   DeployProd:
     needs: [DeployUAT]
