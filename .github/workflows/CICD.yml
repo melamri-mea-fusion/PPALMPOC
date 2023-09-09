@@ -10,7 +10,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: retrieve env vars for uat
-        env: # Or as an environment variable
+        env:
             CICD_TOKEN: ${{ secrets.CICD_TOKENt }}
         id: uat-id
         shell: pwsh
@@ -25,10 +25,7 @@ jobs:
           foreach ($variable in $response.variables) {
             $variableName = $variable.name
             $variableValue = $variable.value
-            # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-            echo $variableName
-            echo $variableValue
-            echo "::set-output name=$variableName::$variableValue"
+            run: echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
           }
       - name: retrieve env vars for PROD
         id: prod-id
@@ -44,10 +41,7 @@ jobs:
           foreach ($variable in $response.variables) {
             $variableName = $variable.name
             $variableValue = $variable.value
-            # Set the output variable in the format "::set-output name=VARIABLE_NAME::VARIABLE_VALUE"
-            echo $variableName
-            echo $variableValue
-            echo "::set-output name=$variableName::$variableValue"
+            run: echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
           }
 
   DeployUAT:
