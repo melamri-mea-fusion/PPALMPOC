@@ -29,7 +29,6 @@ jobs:
   auto-approve-job:
     name: Auto approve job
     needs: get-env-vars-prod
-    environment: PROD
     runs-on: windows-latest
     steps:
     - name: Get Environment Id
