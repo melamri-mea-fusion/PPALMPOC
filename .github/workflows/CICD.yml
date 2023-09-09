@@ -38,7 +38,7 @@ jobs:
         $environmentId = ""
         $url = "https://api.github.com/repos/${{ github.repository }}/environments"
         $response = Invoke-RestMethod -Uri $url -Method Get  -Headers @{
-          Authorization = "Bearer ${{ secrets.MY_SECRET }}"
+          Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
         }
         if ($response){
           # Find Environment Id...
@@ -67,7 +67,7 @@ jobs:
         }
         "@;
         Invoke-RESTMethod -Uri $url -Method POST -Headers @{
-          Authorization = "Bearer ${{ secrets.MY_SECRET }}"
+          Authorization = "Bearer ${{ secrets.GITHUB_TOKEN }}"
         } -Body $body -ContentType "application/json"; 
   DeployUAT:
     needs: [get-env-vars-uat]
