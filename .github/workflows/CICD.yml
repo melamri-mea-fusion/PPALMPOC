@@ -65,7 +65,7 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         $needs.get-env-vars.outputs | Format-List
+         $needs | Format-List
    
   DeployProd:
     needs: [DeployUAT]
