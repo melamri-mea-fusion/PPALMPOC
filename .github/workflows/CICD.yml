@@ -65,7 +65,7 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         echo ${{  needs.get-env-vars.outputs.uat-vars }}
+         ${{  needs.get-env-vars.outputs }} | Format-List
    
   DeployProd:
     needs: [DeployUAT]
