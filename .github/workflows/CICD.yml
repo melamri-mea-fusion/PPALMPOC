@@ -29,7 +29,6 @@ jobs:
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
           echo "{result}={{"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}}" >> $GITHUB_OUTPUT
-          }
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -45,7 +44,6 @@ jobs:
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
           echo "{result}={{"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}}" >> $GITHUB_OUTPUT
-          }
   DeployUAT:
     needs: [get-env-vars]
     name: Deploy to UAT 
