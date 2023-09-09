@@ -28,7 +28,11 @@ jobs:
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_TARGET_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
-          $result = {"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}
+          $properties = @{
+                SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
+                SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
+              }
+          $result = $properties | ConvertTo-Json
           echo $result 
           echo "{result}={$result}" >> $GITHUB_OUTPUT
       - name: retrieve env vars for PROD
@@ -45,7 +49,11 @@ jobs:
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables/SHAREPOINT_TARGET_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
-          $result = {"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE,"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE}
+          $properties = @{
+                SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
+                SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
+              }
+          $result = $properties | ConvertTo-Json
           echo $result 
           echo "{result}={$result}" >> $GITHUB_OUTPUT
   DeployUAT:
