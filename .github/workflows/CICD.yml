@@ -25,7 +25,7 @@ jobs:
           foreach ($variable in $response.variables) {
             $variableName = $variable.name
             $variableValue = $variable.value
-            run: echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
+            echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
           }
       - name: retrieve env vars for PROD
         id: prod-id
@@ -41,7 +41,7 @@ jobs:
           foreach ($variable in $response.variables) {
             $variableName = $variable.name
             $variableValue = $variable.value
-            run: echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
+            echo "{$variableName}={$variableValue}" >> $GITHUB_OUTPUT
           }
 
   DeployUAT:
