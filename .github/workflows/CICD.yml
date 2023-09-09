@@ -25,6 +25,50 @@ jobs:
     steps:
       - run: echo "get env vars for PROD ...."
   
+  auto-approve-job:
+    if: github.triggering_actor == 'username-running-automated-workflow-request'
+    name: Auto approve job
+    needs: get-env-vars-prod
+    runs-on: windows-latest
+    steps:
+    - name: Get Environment Id
+      id: environment-id
+      shell: pwsh
+      run: |
+        $environmentId = ""
+        $url = "https://api.github.com/repos/${{ github.repository }}/environments"
+        $response = Invoke-RestMethod -Uri $url -Method Get  -Headers @{
+          Authorization = "Bearer ${{ secrets.MY_SECRET }}"
+        }
+        if ($response){
+          # Find Environment Id...
+          foreach ($environment in $response.environments) {
+            if ($environment.name -eq "PROD"){
+              $environmentId = $environment.id
+              break
+            }
+          }
+        }
+
+        # Set output
+        echo "::set-output name=value::$(echo $environmentId)"
+
+    - name: Show me Environment Id
+      run: |
+        echo "Environment Id for Prod is ${{ steps.environment-id.outputs.value }}"
+    - name: Auto approve
+      shell: pwsh
+      run: |        
+        $url = "https://api.github.com/repos/${{ github.repository }}/actions/runs/${{ github.run_id }}/pending_deployments";
+        $body = @"
+        { "environment_ids": [ steps.environment-id.outputs.value ],
+          "state": "approved",
+          "comment": "Auto-approved for automation"
+        }
+        "@;
+        Invoke-RESTMethod -Uri $url -Method POST -Headers @{
+          Authorization = "Bearer ${{ secrets.MY_SECRET }}"
+        } -Body $body -ContentType "application/json"; 
   DeployUAT:
     needs: [get-env-vars-uat]
     name: Deploy to UAT 
