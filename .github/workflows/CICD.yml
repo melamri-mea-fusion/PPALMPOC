@@ -33,6 +33,8 @@ jobs:
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
           try {
+            echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
+            echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
             echo "{result}={$jsonProperties }" >> $GITHUB_OUTPUT
           } catch {
