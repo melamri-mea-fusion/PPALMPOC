@@ -36,10 +36,7 @@ jobs:
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
           try {
-            echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
-            echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
-            $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
+            echo "result=$properties" >> $env:GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
