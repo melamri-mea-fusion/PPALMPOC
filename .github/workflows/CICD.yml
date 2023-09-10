@@ -65,10 +65,10 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         $jsonContent = ${{ needs.get-env-vars.outputs.uat-vars}}
-         $properties = $(echo $jsonContent | jq -r .)
-         echo "SHAREPOINT_SOURCE_SITE: $(echo $properties | jq -r .SHAREPOINT_SOURCE_SITE)"
-         echo "SHAREPOINT_TARGET_SITE: $(echo $properties | jq -r .SHAREPOINT_TARGET_SITE)"
+         $jsonContent = '${{ needs.get-env-vars.outputs.uat-vars }}'
+         $properties = $jsonContent | ConvertFrom-Json
+         echo "SHAREPOINT_SOURCE_SITE: $($properties.SHAREPOINT_SOURCE_SITE)"
+         echo "SHAREPOINT_TARGET_SITE: $($properties.SHAREPOINT_TARGET_SITE)"
          
   DeployProd:
     needs: [DeployUAT]
