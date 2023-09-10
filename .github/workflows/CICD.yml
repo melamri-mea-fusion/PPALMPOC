@@ -28,7 +28,9 @@ jobs:
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_TARGET_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
-          echo '::set-output name=result::{"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE,"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE}'
+          $result = {"SHAREPOINT_TARGET_SITE":$SHAREPOINT_TARGET_SITE,"SHAREPOINT_SOURCE_SITE":$SHAREPOINT_SOURCE_SITE}
+          echo $result
+          echo '::set-output name=result::$result'
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
