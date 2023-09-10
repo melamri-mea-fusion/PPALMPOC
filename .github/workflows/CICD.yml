@@ -3,6 +3,9 @@ name: CI + CD
 on:
   pull_request:
     branches: [main]
+    paths: 
+      - SharePoint/**
+      - PowerPlatform/**
 
 jobs:
   get-env-vars:
@@ -58,7 +61,7 @@ jobs:
           }
           $jsonProperties = $properties | ConvertTo-Json -Compress
           echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
-
+          
   DeployUAT:
     needs: [get-env-vars]
     name: Deploy to UAT
@@ -78,8 +81,8 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{fromJson(needs.get-env-vars.outputs.prod-vars).SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{fromJson(needs.get-env-vars.outputs.prod-vars).SHAREPOINT_TARGET_SITE }}
     secrets:
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX: ${{ secrets.MEAFUSION_PFX }}
