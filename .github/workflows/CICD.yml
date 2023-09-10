@@ -43,7 +43,7 @@ jobs:
             echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
             echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "{result}={$properties }" >> $GITHUB_OUTPUT
+            echo "{result}={$properties}" >> $GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
