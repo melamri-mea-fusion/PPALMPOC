@@ -61,8 +61,8 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         $input = ${{ fromJSON(needs.get-env-vars.outputs.uat-vars) }}
-         echo "DEBUG  " $input.SHAREPOINT_SOURCE_SITE $input.SHAREPOINT_TARGET_SITE
+         $input = ${{ needs.get-env-vars.outputs.uat-vars }}
+         echo "DEBUG  " $input
   
   
   DeployProd:
