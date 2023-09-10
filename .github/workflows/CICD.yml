@@ -8,17 +8,12 @@ jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
     outputs:
-        uatVars:  ${{ steps.uat.outputs.test }}
+        output1: ${{ steps.step1.outputs.test }}
         prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
     steps:
-      - name: retrieve env vars for uat
-        env:
-            CICD_TOKEN: ${{ secrets.CICD_TOKENt }}
-        id: uat
-        shell: pwsh
-        run: |
-          echo "test=world" >> "$GITHUB_OUTPUT"
+      - id: step1
+        run: echo "test=hello" >> "$GITHUB_OUTPUT"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -48,7 +43,7 @@ jobs:
     steps:
      - name: x
        env: 
-         OUTPUT1: ${{needs.get-env-vars.outputs.uatVars}}
+         OUTPUT1: ${{needs.get-env-vars.outputs.output1}}
        run: echo "$OUTPUT1"
   
   
