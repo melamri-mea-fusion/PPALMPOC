@@ -63,7 +63,7 @@ jobs:
        env: 
          input: ${{ needs.get-env-vars.outputs.uat-vars }}
        run: |
-         echo "DEBUG  " ${{ env.input }}
+         echo "DEBUG   $input"
   
   
   DeployProd:
