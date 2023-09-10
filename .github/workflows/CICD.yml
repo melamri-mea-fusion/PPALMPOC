@@ -36,7 +36,8 @@ jobs:
             "SHAREPOINT_TARGET_SITE" = $SHAREPOINT_TARGET_SITE
           }
           $jsonProperties = $properties | ConvertTo-Json
-          echo "result=$properties" >> $env:GITHUB_OUTPUT
+          echo $jsonProperties
+          echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
          
       - name: retrieve env vars for PROD
         id: prod-id
