@@ -51,7 +51,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result 
-          echo "{result}={$result }" >> $GITHUB_OUTPUT
+          echo "{result}={ $result }" >> $GITHUB_OUTPUT
   
   DeployUAT:
     needs: [get-env-vars]
