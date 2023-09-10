@@ -64,7 +64,9 @@ jobs:
     steps:
      - name: x
        shell: pwsh
-       run: echo "DEBUG  " ${{  needs.get-env-vars.outputs.uat-vars }}
+       env:
+        JSON_DOC: ${{ toJSON(needs.get-env-vars.outputs.uat-vars) }}
+       run: echo "DEBUG  $JSON_DOC"
   DeployProd:
     needs: [DeployUAT]
     name: Deploy to PROD 
