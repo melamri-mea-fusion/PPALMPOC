@@ -15,10 +15,6 @@ jobs:
       matrix:
         os: [windows-latest]
     steps:
-      - name: Debug Before JSON Output
-        run: |
-          echo "Before JSON Output:"
-          echo "${{ steps.uat-id.outputs.result }}"
       - name: retrieve env vars for uat
         env:
           CICD_TOKEN: ${{ secrets.CICD_TOKEN }}
@@ -43,7 +39,7 @@ jobs:
             echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
             echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "{result}={$properties}" >> $GITHUB_OUTPUT
+            echo "{result}={hello}" >> $GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
