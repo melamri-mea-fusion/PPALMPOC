@@ -37,7 +37,7 @@ jobs:
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
           $jsonProperties = $properties | ConvertTo-Json
-          echo "::set-output name=result::$jsonProperties"
+          echo "::set-output name=result::$properties"
 
       - name: Debug JSON Content
         run: |
