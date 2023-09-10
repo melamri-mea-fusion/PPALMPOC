@@ -76,7 +76,7 @@ jobs:
    
 
   DeployProd:
-    needs: [DeployUAT]
+    needs: [get-env-vars,DeployUAT]
     name: Deploy to PROD
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
