@@ -34,7 +34,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result
-          Write-Host "::set-output name=result::$properties"
+          echo "::set-output name=result::$properties"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -65,7 +65,7 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         $result = ${{ needs.get-env-vars.outputs.uat-vars}} | ConvertTo-Json
+         $result = ${{ needs.get-env-vars.outputs.uat-vars}}
          echo $result 
          
   DeployProd:
