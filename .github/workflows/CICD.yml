@@ -14,8 +14,8 @@ jobs:
           # This is job1
           # Perform some actions...
           
-          # Set an output variable named 'my_output_var' with a value
-          echo "::set-output name=my_output_var::This is the output from job1"
+          # Set an environment variable with a value
+          echo "my_output_var=This is the output from job1" >> $GITHUB_ENV
 
   job2:
     runs-on: windows-latest
@@ -25,5 +25,6 @@ jobs:
         id: get-output-job1
         run: |
           # This is job2
-          # Get the output variable from job1 using ${{ needs.job1.outputs.my_output_var }}
-          echo "The output from job1 is: ${{ needs.job1.outputs.my_output_var }}"
+          # Get the environment variable from job1
+          echo "The output from job1 is: $my_output_var"
+
