@@ -45,10 +45,10 @@ jobs:
             exit 1
           }
       - name: Debug After JSON Output
-        run: |
-          echo "After JSON Output:"
-          echo "${{ steps.uat-id.outputs.result }}"
-          
+        env:
+          SELECTED_COLOR: ${{ steps.uat-id.outputs.result }}
+        run: echo "The selected color is $SELECTED_COLOR"
+        
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
