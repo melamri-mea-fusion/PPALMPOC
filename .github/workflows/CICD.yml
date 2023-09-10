@@ -36,7 +36,6 @@ jobs:
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
           $jsonProperties = $properties | ConvertTo-Json -Compress
-          echo $jsonProperties
           echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
          
       - name: retrieve env vars for PROD
@@ -57,17 +56,21 @@ jobs:
             SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
+          $jsonProperties = $properties | ConvertTo-Json -Compress
+          echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
 
   DeployUAT:
     needs: [get-env-vars]
-    runs-on: windows-latest
     name: Deploy to UAT
-    steps:
-      - name: x
-        shell: pwsh
-        run: |
-          echo "${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_SOURCE_SITE }}"
-          echo "${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_TARGET_SITE }}"
+    uses: ./.github/workflows/MigrateSPLists.yml
+    with:
+      ENVIRONMENT: UAT
+      SHAREPOINT_SOURCE_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_TARGET_SITE }}
+    secrets:
+      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+      MEAFUSION_PFX: ${{ secrets.MEAFUSION_PFX }}
+   
 
   DeployProd:
     needs: [DeployUAT]
@@ -75,8 +78,8 @@ jobs:
     uses: ./.github/workflows/MigrateSPLists.yml
     with:
       ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{ needs.get-env-vars.outputs.prod-vars.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{ needs.get-env-vars.outputs.prod-vars.SHAREPOINT_TARGET_SITE }}
+      SHAREPOINT_SOURCE_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_SOURCE_SITE }}
+      SHAREPOINT_TARGET_SITE: ${{fromJson(needs.get-env-vars.outputs.uat-vars).SHAREPOINT_TARGET_SITE }}
     secrets:
       MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
       MEAFUSION_PFX: ${{ secrets.MEAFUSION_PFX }}
