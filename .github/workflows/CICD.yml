@@ -66,8 +66,7 @@ jobs:
       - name: x
         shell: pwsh
         run: |
-          $jsonContent=${{ needs.get-env-vars.outputs.uat-vars }}
-          echo $jsonContent
+          echo "${{ needs.get-env-vars.outputs.uat-vars }}"
 
   DeployProd:
     needs: [DeployUAT]
