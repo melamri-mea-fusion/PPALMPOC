@@ -39,16 +39,11 @@ jobs:
             echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
             echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "result=$jsonProperties" >> $GITHUB_OUTPUT
+            echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
-          }
-      - name: Debug After JSON Output
-        env:
-          SELECTED_COLOR: ${{ steps.uat-id.outputs.result }}
-        run: echo "The selected color is $SELECTED_COLOR"
-        
+          }   
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -67,9 +62,6 @@ jobs:
             SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
-          $result = $properties | ConvertTo-Json
-          echo $result
-          echo "{result}={$result }" >> $env:GITHUB_OUTPUT
 
   DeployUAT:
     needs: [get-env-vars]
