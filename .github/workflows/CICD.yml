@@ -30,7 +30,7 @@ jobs:
           $SHAREPOINT_TARGET_SITE = $response.value
           $result = "{`"SHAREPOINT_TARGET_SITE`":$SHAREPOINT_TARGET_SITE,`"SHAREPOINT_SOURCE_SITE`":$SHAREPOINT_SOURCE_SITE}"
           echo $result
-          echo '::set-output name=result::$result'
+          echo '::set-output name=result::$SHAREPOINT_TARGET_SITE'
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
