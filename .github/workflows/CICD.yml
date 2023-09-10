@@ -28,13 +28,12 @@ jobs:
           $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_TARGET_SITE"
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
-          $properties = @{
+          $result = @{
                 SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
                 SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
               }
-          $result = $properties | ConvertTo-Json
           echo $result
-          Write-Host "::set-output name=result::$SHAREPOINT_SOURCE_SITE"
+          Write-Host "::set-output name=result::$result
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -64,7 +63,7 @@ jobs:
     steps:
      - name: x
        shell: pwsh
-       run: echo "DEBUG  " ${{  needs.get-env-vars.outputs.uat-vars }}
+       run: echo "DEBUG  " ${{  needs.get-env-vars.outputs.uat-vars.SHAREPOINT_SOURCE_SITE }} ${{  needs.get-env-vars.outputs.uat-vars.SHAREPOINT_TARGER_SITE }}
   DeployProd:
     needs: [DeployUAT]
     name: Deploy to PROD 
