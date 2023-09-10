@@ -6,25 +6,19 @@ on:
 
 jobs:
   job1:
+    outputs:
+      myoutput: ${{ steps.step1.outputs.myoutput }}
     runs-on: windows-latest
     steps:
-      - name: Set an output variable in job1
-        id: set-output-job1
-        run: |
-          # This is job1
-          # Perform some actions...
-          
-          # Set an environment variable with a value
-          echo "my_output_var=This is the output from job1" >> $GITHUB_ENV
+    - name: set output
+      id: step1
+      run: |
+        echo "myoutput='hello world'" >> $GITHUB_OUTPUT
 
   job2:
+    needs: job1
     runs-on: windows-latest
-    needs: job1  # Ensure job2 runs after job1
     steps:
-      - name: Get the output variable from job1
-        id: get-output-job1
-        run: |
-          # This is job2
-          # Get the environment variable from job1
-          echo "The output from job1 is: $my_output_var"
-
+    - name: retrieve output
+      run: |
+        echo ${{ needs.job1.outputs.myoutput }}
