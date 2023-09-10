@@ -34,7 +34,7 @@ jobs:
               }
           $result = $properties | ConvertTo-Json
           echo $result
-          Write-Host "::set-output name=result::$result"
+          Write-Host "::set-output name=result::$SHAREPOINT_SOURCE_SITE"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
