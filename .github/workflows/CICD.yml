@@ -8,7 +8,7 @@ jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
     outputs:
-        uat-vars:  ${{ steps.uat-id.outputs.result }}
+        uat-vars:  ${{ steps.uat-id.outputs.test }}
         prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
     steps:
@@ -30,7 +30,7 @@ jobs:
           $SHAREPOINT_TARGET_SITE = $response.value
           $result = "{`"SHAREPOINT_TARGET_SITE`":$SHAREPOINT_TARGET_SITE,`"SHAREPOINT_SOURCE_SITE`":$SHAREPOINT_SOURCE_SITE}"
           echo $result
-          echo "result=hello" >> "$GITHUB_OUTPUT"
+          echo "test=world" >> "$GITHUB_OUTPUT"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -61,9 +61,8 @@ jobs:
      - name: x
        shell: pwsh
        env: 
-         input: ${{ needs.get-env-vars.outputs.uat-vars }}
-       run: |
-         echo "DEBUG   $input"
+         input: ${{needs.get-env-vars.outputs.uat-vars}}
+       run: echo "$input"
   
   
   DeployProd:
