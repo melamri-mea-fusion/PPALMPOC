@@ -67,7 +67,7 @@ jobs:
        env: 
          input: ${{ needs.get-env-vars.outputs.uat-vars}}
        run: |
-         echo "$input"
+         echo $input
          
   DeployProd:
     needs: [DeployUAT]
