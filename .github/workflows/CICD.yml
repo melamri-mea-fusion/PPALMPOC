@@ -48,6 +48,7 @@ jobs:
         run: |
           echo "After JSON Output:"
           echo "${{ steps.uat-id.outputs.result }}"
+          cat $GITHUB_OUTPUT
           
       - name: retrieve env vars for PROD
         id: prod-id
