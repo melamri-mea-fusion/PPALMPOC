@@ -64,10 +64,7 @@ jobs:
     steps:
      - name: x
        shell: pwsh
-       env: 
-         input: ${{ needs.get-env-vars.outputs.uat-vars}}
-       run: |
-         echo $input
+       run: echo ${{ needs.get-env-vars.outputs.uat-vars}}
          
   DeployProd:
     needs: [DeployUAT]
