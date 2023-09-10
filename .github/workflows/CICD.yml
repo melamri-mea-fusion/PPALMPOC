@@ -33,11 +33,11 @@ jobs:
           $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
           $SHAREPOINT_TARGET_SITE = $response.value
           $properties = @{
-            SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
-            SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
+            "SHAREPOINT_SOURCE_SITE" = $SHAREPOINT_SOURCE_SITE
+            "SHAREPOINT_TARGET_SITE" = $SHAREPOINT_TARGET_SITE
           }
           $jsonProperties = $properties | ConvertTo-Json
-          echo "::set-output name=result::$properties"
+          echo "::set-output name=result::$jsonProperties"
 
       - name: Debug JSON Content
         run: |
