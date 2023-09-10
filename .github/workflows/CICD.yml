@@ -64,7 +64,7 @@ jobs:
     steps:
      - name: x
        shell: pwsh
-       run: echo ${{  needs.get-env-vars.uat-vars.outputs.SHAREPOINT_SOURCE_SITE }}
+       run: echo ${{  needs.get-env-vars.outputs.uat-vars }}
    
   DeployProd:
     needs: [DeployUAT]
