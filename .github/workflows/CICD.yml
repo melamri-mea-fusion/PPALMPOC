@@ -35,7 +35,7 @@ jobs:
             "SHAREPOINT_SOURCE_SITE" = $SHAREPOINT_SOURCE_SITE
             "SHAREPOINT_TARGET_SITE" = $SHAREPOINT_TARGET_SITE
           }
-          $jsonProperties = $properties | ConvertTo-Json
+          $jsonProperties = $properties | ConvertTo-Json -Compress
           echo $jsonProperties
           echo "result=$jsonProperties" >> $env:GITHUB_OUTPUT
          
