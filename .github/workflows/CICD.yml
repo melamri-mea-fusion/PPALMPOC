@@ -9,7 +9,7 @@ on:
 
 jobs:
   get-env-vars:
-    name: Get Environment vars for each deployment stage
+    name: Deployment preparation
     outputs:
       uat-vars: ${{ steps.uat-id.outputs.result }}
       prod-vars: ${{ steps.prod-id.outputs.result }}
