@@ -31,7 +31,7 @@ jobs:
           }
           try {
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "##[set-env name=uat-vars]${{ $jsonProperties }}"
+            echo "##[set-env name=uat-vars]$jsonProperties"
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
