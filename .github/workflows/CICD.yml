@@ -7,18 +7,8 @@ on:
 jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
-    outputs:
-      uat-vars: ${{ steps.uat-id.outputs.result }}
-      prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
-    strategy:
-      matrix:
-        os: [windows-latest]
     steps:
-      - name: Debug Before JSON Output
-        run: |
-          echo "Before JSON Output:"
-          echo "${{ steps.uat-id.outputs.result }}"
       - name: retrieve env vars for uat
         env:
           CICD_TOKEN: ${{ secrets.CICD_TOKEN }}
@@ -40,18 +30,12 @@ jobs:
             SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
           }
           try {
-            echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
-            echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "{result}={$jsonProperties }" >> $GITHUB_OUTPUT
+            echo "##[set-env name=uat-vars]${{ $jsonProperties }}"
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
           }
-      - name: Debug After JSON Output
-        run: |
-          echo "After JSON Output:"
-          echo "${{ steps.uat-id.outputs.result }}"
           
       - name: retrieve env vars for PROD
         id: prod-id
@@ -83,10 +67,9 @@ jobs:
       - name: x
         shell: pwsh
         run: |
-          $jsonContent="${{ needs.get-env-vars.outputs.uat-vars }}"
-          properties=$(echo $jsonContent)
+          $jsonContent = $env:uat-vars
           echo "JSON Properties:"
-          echo "$properties"
+          echo $jsonContent
 
   DeployProd:
     needs: [DeployUAT]
