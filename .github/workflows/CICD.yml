@@ -11,7 +11,14 @@ jobs:
       uat-vars: ${{ steps.uat-id.outputs.result }}
       prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
+    strategy:
+      matrix:
+        os: [windows-latest]
     steps:
+      - name: Debug Before JSON Output
+        run: |
+          echo "Before JSON Output:"
+          echo "${{ steps.uat-id.outputs.result }}"
       - name: retrieve env vars for uat
         env:
           CICD_TOKEN: ${{ secrets.CICD_TOKEN }}
@@ -41,9 +48,9 @@ jobs:
             Write-Host "Error converting to JSON: $_"
             exit 1
           }
-      - name: Debug JSON Content Before Next Job
+      - name: Debug After JSON Output
         run: |
-          echo "JSON Content Before Next Job:"
+          echo "After JSON Output:"
           echo "${{ steps.uat-id.outputs.result }}"
           
       - name: retrieve env vars for PROD
