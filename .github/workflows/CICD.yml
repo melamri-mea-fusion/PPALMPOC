@@ -39,6 +39,8 @@ jobs:
             echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
             echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
+            echo "DEBUG"
+            echo $jsonProperties
             echo "::set-output name=result::hello"
           } catch {
             Write-Host "Error converting to JSON: $_"
