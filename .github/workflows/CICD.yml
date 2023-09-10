@@ -32,7 +32,8 @@ jobs:
                 SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
                 SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
               }
-          echo "::set-output name=result::$properties"
+          $jsonProperties = $properties | ConvertTo-Json
+          echo "::set-output name=result::$jsonProperties"
           
       - name: retrieve env vars for PROD
         id: prod-id
@@ -64,8 +65,10 @@ jobs:
      - name: x
        shell: pwsh
        run: |
-         $result = ${{ needs.get-env-vars.outputs.uat-vars}}
-         echo $result 
+         jsonContent = ${{ needs.get-env-vars.outputs.uat-vars}}
+         properties=$(echo $jsonContent | jq -r .)
+         echo "SHAREPOINT_SOURCE_SITE: $(echo $properties | jq -r .SHAREPOINT_SOURCE_SITE)"
+         echo "SHAREPOINT_TARGET_SITE: $(echo $properties | jq -r .SHAREPOINT_TARGET_SITE)"
          
   DeployProd:
     needs: [DeployUAT]
