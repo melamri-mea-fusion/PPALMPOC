@@ -38,7 +38,7 @@ jobs:
           }
           try {
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "::set-output name=result::$jsonProperties"
+            echo "{result}={$jsonProperties }" >> $GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
