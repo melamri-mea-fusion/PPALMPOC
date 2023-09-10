@@ -39,16 +39,11 @@ jobs:
             echo "SHAREPOINT_SOURCE_SITE: $SHAREPOINT_SOURCE_SITE"
             echo "SHAREPOINT_TARGET_SITE: $SHAREPOINT_TARGET_SITE"
             $jsonProperties = $properties | ConvertTo-Json -ErrorAction Stop
-            echo "result=$jsonProperties" >> $GITHUB_OUTPUT
+            echo "result={\"include\":[{\"project\":\"foo\",\"config\":\"Debug\"},{\"project\":\"bar\",\"config\":\"Release\"}]}" >> $GITHUB_OUTPUT
           } catch {
             Write-Host "Error converting to JSON: $_"
             exit 1
-          }
-      - name: Debug After JSON Output
-        env:
-          SELECTED_COLOR: ${{ steps.uat-id.outputs.result }}
-        run: echo "The selected color is $SELECTED_COLOR"
-        
+          }      
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -74,15 +69,14 @@ jobs:
   DeployUAT:
     needs: [get-env-vars]
     runs-on: windows-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get-env-vars.outputs.result) }}
     name: Deploy to UAT
     steps:
       - name: x
         shell: pwsh
         run: |
-          $jsonContent="${{ needs.get-env-vars.outputs.uat-vars }}"
-          properties=$(echo $jsonContent)
-          echo "JSON Properties:"
-          echo "$properties"
+          echo ${{ matrix.version }}
 
   DeployProd:
     needs: [DeployUAT]
