@@ -5,56 +5,22 @@ on:
     branches: [ main ]
     
 jobs:
-  get-env-vars:
-    name: Get Environment vars for each deployment stage
-    outputs:
-        output1: ${{ steps.step1.outputs.test }}
-        prod-vars: ${{ steps.prod-id.outputs.result }}
+  job1:
     runs-on: windows-latest
+    # Map a step output to a job output
+    outputs:
+      output1: ${{ steps.step1.outputs.test }}
+      output2: ${{ steps.step2.outputs.test }}
     steps:
       - id: step1
         run: echo "test=hello" >> "$GITHUB_OUTPUT"
-      - name: retrieve env vars for PROD
-        id: prod-id
-        shell: pwsh
-        run: |
-          $headers = @{
-                    "Accept" = "application/vnd.github+json"
-                    "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
-                  }
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables/SHAREPOINT_SOURCE_SITE"
-          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          $SHAREPOINT_SOURCE_SITE = $response.value
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/PROD/variables/SHAREPOINT_TARGET_SITE"
-          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          $SHAREPOINT_TARGET_SITE = $response.value
-          $properties = @{
-                SHAREPOINT_SOURCE_SITE = $SHAREPOINT_SOURCE_SITE
-                SHAREPOINT_TARGET_SITE = $SHAREPOINT_TARGET_SITE
-              }
-          $result = $properties | ConvertTo-Json
-          echo $result 
-          echo "{result}={ $result }" >> $GITHUB_OUTPUT
-  
-  DeployUAT:
-    needs: get-env-vars
-    runs-on: windows-latest
-    name: Deploy to UAT 
+      - id: step2
+        run: echo "test=world" >> "$GITHUB_OUTPUT"
+  job2:
+    runs-on: winfows-latest
+    needs: job1
     steps:
-     - name: x
-       env: 
-         OUTPUT1: ${{needs.get-env-vars.outputs.output1}}
-       run: echo "$OUTPUT1"
-  
-  
-  DeployProd:
-    needs: [DeployUAT]
-    name: Deploy to PROD 
-    uses: ./.github/workflows/MigrateSPLists.yml
-    with:
-      ENVIRONMENT: PROD
-      SHAREPOINT_SOURCE_SITE: ${{  needs.get-env-vars.outputs.prod-vars.SHAREPOINT_SOURCE_SITE }}
-      SHAREPOINT_TARGET_SITE: ${{  needs.get-env-vars.outputs.prod-vars.SHAREPOINT_TARGET_SITE }}
-    secrets: 
-      MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
-      MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
+      - env:
+          OUTPUT1: ${{needs.job1.outputs.output1}}
+          OUTPUT2: ${{needs.job1.outputs.output2}}
+        run: echo "$OUTPUT1 $OUTPUT2"
