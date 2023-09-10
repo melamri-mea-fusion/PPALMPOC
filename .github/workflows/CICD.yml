@@ -30,7 +30,7 @@ jobs:
           $SHAREPOINT_TARGET_SITE = $response.value
           $result = "{`"SHAREPOINT_TARGET_SITE`":$SHAREPOINT_TARGET_SITE,`"SHAREPOINT_SOURCE_SITE`":$SHAREPOINT_SOURCE_SITE}"
           echo $result
-           echo "{result}={$SHAREPOINT_TARGET_SITE }" >> $GITHUB_OUTPUT
+          echo "result=hello" >> "$GITHUB_OUTPUT"
       - name: retrieve env vars for PROD
         id: prod-id
         shell: pwsh
@@ -60,9 +60,10 @@ jobs:
     steps:
      - name: x
        shell: pwsh
+       env: 
+         input: ${{ needs.get-env-vars.outputs.uat-vars }}
        run: |
-         $input = ${{ needs.get-env-vars.outputs.uat-vars }}
-         echo "DEBUG  " $input
+         echo "DEBUG  " ${{ env.input }}
   
   
   DeployProd:
