@@ -18,18 +18,6 @@ jobs:
         id: uat
         shell: pwsh
         run: |
-          $headers = @{
-                    "Accept" = "application/vnd.github+json"
-                    "Authorization" = "Bearer ${{ secrets.CICD_TOKEN }}"
-                  }
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_SOURCE_SITE"
-          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          $SHAREPOINT_SOURCE_SITE = $response.value
-          $url = "https://api.github.com/repositories/${{ github.repository_id }}/environments/UAT/variables/SHAREPOINT_TARGET_SITE"
-          $response = Invoke-RestMethod -Uri $url -Headers $headers -Method Get
-          $SHAREPOINT_TARGET_SITE = $response.value
-          $result = "{`"SHAREPOINT_TARGET_SITE`":$SHAREPOINT_TARGET_SITE,`"SHAREPOINT_SOURCE_SITE`":$SHAREPOINT_SOURCE_SITE}"
-          echo $result
           echo "test=world" >> "$GITHUB_OUTPUT"
       - name: retrieve env vars for PROD
         id: prod-id
@@ -54,7 +42,7 @@ jobs:
           echo "{result}={ $result }" >> $GITHUB_OUTPUT
   
   DeployUAT:
-    needs: [get-env-vars]
+    needs: get-env-vars
     runs-on: windows-latest
     name: Deploy to UAT 
     steps:
