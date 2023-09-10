@@ -8,14 +8,14 @@ jobs:
   get-env-vars:
     name: Get Environment vars for each deployment stage
     outputs:
-        uat-vars:  ${{ steps.uat-id.outputs.test }}
+        uatVars:  ${{ steps.uat.outputs.test }}
         prod-vars: ${{ steps.prod-id.outputs.result }}
     runs-on: windows-latest
     steps:
       - name: retrieve env vars for uat
         env:
             CICD_TOKEN: ${{ secrets.CICD_TOKENt }}
-        id: uat-id
+        id: uat
         shell: pwsh
         run: |
           $headers = @{
@@ -59,10 +59,9 @@ jobs:
     name: Deploy to UAT 
     steps:
      - name: x
-       shell: pwsh
        env: 
-         input: ${{needs.get-env-vars.outputs.uat-vars}}
-       run: echo "$input"
+         OUTPUT1: ${{needs.get-env-vars.outputs.uatVars}}
+       run: echo "$OUTPUT1"
   
   
   DeployProd:
