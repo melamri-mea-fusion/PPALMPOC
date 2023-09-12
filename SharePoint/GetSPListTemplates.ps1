@@ -15,7 +15,7 @@ foreach ($list in $listsToMigrate) {
     Connect-PnPOnline -ClientId '9afea424-5d73-428b-b9ea-e0d87d400831' -CertificatePath $pfxFileName -CertificatePassword (ConvertTo-SecureString -AsPlainText $Env:MEAFUSION_PFX_PASSWORD -Force) -Url $Env:SHAREPOINT_SOURCE_SITE -Tenant "meafusion.onmicrosoft.com" 
     Write-Output "Connect to the Source Site ... OK"
     
-    Get-PnPSiteTemplate -Out .\templates\$list+"TemplateFile.xml" -ListsToExtract $list -Handlers Lists
+    Get-PnPSiteTemplate -Out .\SharePoint\schema\$list+"TemplateFile.xml" -ListsToExtract $list -Handlers Lists
     Write-Output "Create the Template for $list ... OK" 
 }
 $guid = [System.Guid]::NewGuid()
@@ -24,7 +24,7 @@ $branchName = "sharepoint-patch-" +  $guid
 
 git config user.name github-actions
           git config user.email github-actions@github.com
-          git add templates.zip
+          git add .\SharePoint\schema\*
           git commit -m "generated"
           git push -u origin $branchName
 
