@@ -1,7 +1,11 @@
 name: export-and-branch-splists
 
 on:
-  workflow_dispatch:
+  workflow_dispatch
+  
+permissions:
+  contents: write
+  
 jobs:
     GET_SP_List_TEMPLATES:
       name: Run SP Migration Script
