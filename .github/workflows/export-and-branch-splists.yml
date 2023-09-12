@@ -1,0 +1,25 @@
+name: export-and-branch-splists
+
+on:
+  workflow_dispatch:
+jobs:
+    GET_SP_List_TEMPLATES:
+      name: Run SP Migration Script
+      runs-on: windows-latest
+      environment: UAT
+      steps:
+        - uses: actions/checkout@v3
+        - name: Install and cache PowerShell modules
+          uses: potatoqualitee/psmodulecache@v5.2
+          with:
+           modules-to-cache: PnP.PowerShell:1.12.0
+           shell: powershell
+        - name: MigrateSPLists
+          env: 
+              MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
+              MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
+              SHAREPOINT_SOURCE_SITE: ${{vars.SHAREPOINT_SOURCE_SITE}}
+              SHAREPOINT_TARGET_SITE: ${{vars.SHAREPOINT_TARGET_SITE}}
+          run: .\SharePoint\GetSPListTemplates.ps1
+          shell: powershell
+        
