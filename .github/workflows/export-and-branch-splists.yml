@@ -14,7 +14,8 @@ jobs:
           with:
            modules-to-cache: PnP.PowerShell:1.12.0
            shell: powershell
-        - name: MigrateSPLists
+        - name: GenreateTemplates
+          id: generate-templates
           env: 
               MEAFUSION_PFX_PASSWORD: ${{ secrets.MEAFUSION_PFX_PASSWORD }}
               MEAFUSION_PFX : ${{ secrets.MEAFUSION_PFX }}
