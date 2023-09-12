@@ -18,7 +18,10 @@ foreach ($list in $listsToMigrate) {
     Get-PnPSiteTemplate -Out .\templates\$list+"TemplateFile.xml" -ListsToExtract $list -Handlers Lists
     Write-Output "Create the Template for $list ... OK" 
 }
-$branchName = "sharepoint-patch-"+ NewGuid()
+$guid = [System.Guid]::NewGuid()
+$guidString = $guid.ToString("D")
+$branchName = "sharepoint-patch-" +  $guid
+
 git config user.name github-actions
           git config user.email github-actions@github.com
           git add templates.zip
