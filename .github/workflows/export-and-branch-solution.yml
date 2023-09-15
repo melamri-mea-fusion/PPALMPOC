@@ -29,6 +29,7 @@ permissions:
 jobs:
   export-solution-from-dev:
     runs-on: windows-latest
+    environment: DEV
     steps:
     - uses: actions/checkout@v3
       with:
@@ -39,7 +40,6 @@ jobs:
     - name: export-solution action
       uses: microsoft/powerplatform-actions/export-solution@v1
       with:
-        ENVIRONMENT: DEV
         environment-url: ${{vars.ENVIRONMENT_URL}}
         app-id: ${{vars.CLIENT_ID}}
         client-secret: ${{secrets.SPN}}
