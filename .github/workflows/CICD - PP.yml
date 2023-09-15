@@ -27,7 +27,7 @@ jobs:
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
        - name: export-data
-         uses: microsoft/powerplatform-actions/export-data@v1
+         uses: microsoft/powerplatform-actions/import-data@v1
          with:
           environment-url: ${{vars.ENVIRONMENT_URL}}
           app-id: ${{vars.CLIENT_ID}}
@@ -54,7 +54,7 @@ jobs:
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
        - name: export-data
-         uses: microsoft/powerplatform-actions/export-data@v1
+         uses: microsoft/powerplatform-actions/import-data@v1
          with:
           environment-url: ${{vars.ENVIRONMENT_URL}}
           app-id: ${{vars.CLIENT_ID}}
