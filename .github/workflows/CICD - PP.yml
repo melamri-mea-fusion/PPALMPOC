@@ -37,6 +37,7 @@ jobs:
           data-file: PowerPlatform/data/data.zip
 
   PROD_Deployment:
+    needs: [UAT_DATA_MIGRATION]
     uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
     with:
       solution_name: PPALMPOC
