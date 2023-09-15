@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EntityRelationships xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <EntityRelationship Name="business_unit_cr2c4_country" />
+  <EntityRelationship Name="business_unit_cr2c4_region" />
+  <EntityRelationship Name="cr2c4_cr2c4_country_Region_cr2c4_region" />
+  <EntityRelationship Name="lk_cr2c4_country_createdby" />
+  <EntityRelationship Name="lk_cr2c4_country_modifiedby" />
+  <EntityRelationship Name="lk_cr2c4_region_createdby" />
+  <EntityRelationship Name="lk_cr2c4_region_modifiedby" />
+  <EntityRelationship Name="owner_cr2c4_country" />
+  <EntityRelationship Name="owner_cr2c4_region" />
+  <EntityRelationship Name="team_cr2c4_country" />
+  <EntityRelationship Name="team_cr2c4_region" />
+  <EntityRelationship Name="user_cr2c4_country" />
+  <EntityRelationship Name="user_cr2c4_region" />
+</EntityRelationships>
