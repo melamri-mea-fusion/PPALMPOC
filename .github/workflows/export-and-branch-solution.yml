@@ -27,7 +27,7 @@ on:
 permissions:
   contents: write
 jobs:
-  export-from-dev:
+  export-solution-from-dev:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
