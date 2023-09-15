@@ -24,6 +24,20 @@ jobs:
           CLIENT_ID: ${{vars.CLIENT_ID}}
           TENANT_ID: ${{vars.TENANT_ID}}
           CLIENT_SECRET: ${{secrets.SPN}}
+  
+  UAT_DATA_MIGRATION: 
+    needs: [UAT_Deployment]
+    runs-on: windows-latest
+    environment: UAT
+    steps: 
+       - name: export-data
+         uses: microsoft/powerplatform-actions/export-data@v1
+         with:
+          environment-url: ${{vars.ENVIRONMENT_URL}}
+          app-id: ${{vars.CLIENT_ID}}
+          client-secret: ${{secrets.SPN}}
+          tenant-id: ${{vars.TENANT_ID}}
+          data-file: PowerPlatform/data/data.zip
 
   PROD_Deployment:
     needs: [UAT_Deployment]
@@ -39,4 +53,18 @@ jobs:
           PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
           CLIENT_ID: ${{vars.CLIENT_ID}}
           TENANT_ID: ${{vars.TENANT_ID}}
-          CLIENT_SECRET: ${{secrets.SPN}}   
+          CLIENT_SECRET: ${{secrets.SPN}} 
+
+  PROD_DATA_MIGRATION: 
+      needs: [PROD_Deployment]
+      runs-on: windows-latest
+      environment: PROD
+      steps: 
+       - name: export-data
+         uses: microsoft/powerplatform-actions/export-data@v1
+         with:
+          environment-url: ${{vars.ENVIRONMENT_URL}}
+          app-id: ${{vars.CLIENT_ID}}
+          client-secret: ${{secrets.SPN}}
+          tenant-id: ${{vars.TENANT_ID}}
+          data-file: PowerPlatform/data/data.zip
