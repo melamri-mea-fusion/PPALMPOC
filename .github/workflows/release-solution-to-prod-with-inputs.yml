@@ -69,8 +69,8 @@ jobs:
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v1
       with:
-        solution-folder: ${{ inputs.solution_source_folder}}/${{ inputs.solution_name }}
-        solution-file: ${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
+        solution-folder: PowerPlatform/${{ inputs.solution_source_folder}}/${{ inputs.solution_name }}
+        solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         solution-type: Unmanaged
 
     - name: Import solution as unmanaged to build env
@@ -80,7 +80,7 @@ jobs:
         app-id: ${{inputs.CLIENT_ID}}
         client-secret: ${{ secrets.CLIENT_SECRET }} 
         tenant-id: ${{inputs.TENANT_ID}}
-        solution-file: ${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
+        solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
 
@@ -93,13 +93,13 @@ jobs:
         tenant-id: ${{inputs.TENANT_ID}}
         solution-name: ${{ inputs.solution_name }}
         managed: true
-        solution-output-file: ${{ inputs.solution_shipping_folder}}/${{ inputs.solution_name }}_managed.zip
+        solution-output-file: PowerPlatform/${{ inputs.solution_shipping_folder}}/${{ inputs.solution_name }}_managed.zip
 
     - name: Upload the ready to ship solution to GH artifact store
       uses: actions/upload-artifact@v2
       with:
         name: managedSolutions
-        path: ${{ inputs.solution_shipping_folder}}/
+        path: PowerPlatform/${{ inputs.solution_shipping_folder}}/
 
   release-to-staging:
     needs: [ convert-to-managed ]
@@ -117,7 +117,7 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: managedSolutions
-        path: ${{ inputs.solution_release_folder}}
+        path: PowerPlatform/${{ inputs.solution_release_folder}}
     - name: Power Platform Action Install
       uses: microsoft/powerplatform-actions/actions-install@v1
     - name: Import solution to prod env
@@ -127,6 +127,6 @@ jobs:
         app-id: ${{inputs.CLIENT_ID}}
         client-secret: ${{ secrets.CLIENT_SECRET }} 
         tenant-id: ${{inputs.TENANT_ID}}
-        solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
+        solution-file: PowerPlatform/${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
         publish-changes: true
