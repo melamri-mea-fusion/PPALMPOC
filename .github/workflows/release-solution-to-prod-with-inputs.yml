@@ -47,6 +47,13 @@ jobs:
       RUNNER_DEBUG: 1
     environment: ${{ inputs.ENVIRONMENT }}
     steps:
+    - name: DEBUG
+      run: |
+        echo "Environment-url: ${{vars.ENVIRONMENT_URL}}"
+        echo "app-id: ${{vars.CLIENT_ID}}"
+        echo "client-secret: ${{secrets.SPN}}"
+        echo "tenant-id: ${{vars.TENANT_ID}}"
+        
     - uses: actions/checkout@v3
       with:
         lfs: true
