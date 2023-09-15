@@ -11,22 +11,16 @@ permissions:
 
 jobs:
   UAT_Deployment:
-    runs-on: windows-latest
-    environment: UAT
-    steps: 
-      - uses: actions/checkout@v3
-        with:
-          lfs: true
-      - name: install solution
-        uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
-        with:
-          solution_name: PPALMPOC
-          #Update your values here
-          BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
-          PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
-          CLIENT_ID: ${{vars.CLIENT_ID}}
-          TENANT_ID: ${{vars.TENANT_ID}}
-          CLIENT_SECRET: ${{secrets.SPN}}
+    uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
+    with:
+      solution_name: PPALMPOC
+      BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
+      PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
+      CLIENT_ID: ${{vars.CLIENT_ID}}
+      TENANT_ID: ${{vars.TENANT_ID}}
+      ENVIRONMENT: UAT
+    secrets:
+      CLIENT_SECRET: ${{secrets.SPN}}
   
   UAT_DATA_MIGRATION: 
     needs: [UAT_Deployment]
@@ -43,20 +37,17 @@ jobs:
           data-file: PowerPlatform/data/data.zip
 
   PROD_Deployment:
-    needs: [UAT_Deployment]
-    runs-on: windows-latest
-    environment: PROD
-    steps: 
-      - name: install solution
-        uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
-        with:
-          solution_name: PPALMPOC
-          #Update your values here
-          BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
-          PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
-          CLIENT_ID: ${{vars.CLIENT_ID}}
-          TENANT_ID: ${{vars.TENANT_ID}}
-          CLIENT_SECRET: ${{secrets.SPN}} 
+    uses: ./.github/workflows/release-solution-to-prod-with-inputs.yml
+    with:
+      solution_name: PPALMPOC
+      BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
+      PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
+      CLIENT_ID: ${{vars.CLIENT_ID}}
+      TENANT_ID: ${{vars.TENANT_ID}}
+      ENVIRONMENT: PROD
+    secrets:
+      CLIENT_SECRET: ${{secrets.SPN}}
+   
 
   PROD_DATA_MIGRATION: 
       needs: [PROD_Deployment]
