@@ -8,6 +8,9 @@ on:
       #Do Not change these values
       #Values are set by the caller
       #caller sample: release-action-call.ymnl
+      ENVIRONMENT:
+        required: true
+        type: string
       solution_name:
         description: 'The solution name.'
         type: string
@@ -44,10 +47,10 @@ on:
         description: 'The tenant id'
         type: string
         required: true
-      CLIENT_SECRET:
-        description: 'secret'
-        type: string
-        required: true
+      
+    secrets:
+            CLIENT_SECRET:
+              required: true
 
 jobs:
   convert-to-managed:
@@ -55,7 +58,7 @@ jobs:
     # or you can say runs-on: ubuntu-latest
     env:
       RUNNER_DEBUG: 1
-
+    environment: ${{ inputs.ENVIRONMENT }}
     steps:
     - uses: actions/checkout@v3
       with:
@@ -75,7 +78,7 @@ jobs:
       with:
         environment-url: ${{inputs.BUILD_ENVIRONMENT_URL}}
         app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ input.CLIENT_SECRET }} 
+        client-secret: ${{ secret.CLIENT_SECRET }} 
         tenant-id: ${{inputs.TENANT_ID}}
         solution-file: ${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
@@ -86,7 +89,7 @@ jobs:
       with:
         environment-url: ${{inputs.BUILD_ENVIRONMENT_URL}}
         app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ input.CLIENT_SECRET }} 
+        client-secret: ${{ secret.CLIENT_SECRET }} 
         tenant-id: ${{inputs.TENANT_ID}}
         solution-name: ${{ inputs.solution_name }}
         managed: true
@@ -100,6 +103,7 @@ jobs:
 
   release-to-staging:
     needs: [ convert-to-managed ]
+    environment: ${{ inputs.ENVIRONMENT }}
     runs-on: windows-latest
     env:
       RUNNER_DEBUG: 1
@@ -121,7 +125,7 @@ jobs:
       with:
         environment-url: ${{inputs.PRODUCTION_ENVIRONMENT_URL}}
         app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ input.CLIENT_SECRET }} 
+        client-secret: ${{ secret.CLIENT_SECRET }} 
         tenant-id: ${{inputs.TENANT_ID}}
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
