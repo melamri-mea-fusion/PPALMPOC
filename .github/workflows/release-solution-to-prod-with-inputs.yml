@@ -51,7 +51,7 @@ jobs:
       run: |
         echo "Environment-url: ${{vars.ENVIRONMENT_URL}}"
         echo "app-id: ${{vars.CLIENT_ID}}"
-        echo "client-secret: ${{secrets.SPN}}"
+        echo "client-secret: ${{secrets.CLIENT_SECRET}}"
         echo "tenant-id: ${{vars.TENANT_ID}}"
         
     - uses: actions/checkout@v3
@@ -72,7 +72,7 @@ jobs:
       with:
         environment-url: ${{vars.ENVIRONMENT_URL}}
         app-id: ${{vars.CLIENT_ID}}
-        client-secret: ${{secrets.SPN}}
+        client-secret: ${{secrets.CLIENT_SECRET}}
         tenant-id: ${{vars.TENANT_ID}}
         solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
@@ -83,7 +83,7 @@ jobs:
       with:
         environment-url: ${{vars.ENVIRONMENT_URL}}
         app-id: ${{vars.CLIENT_ID}}
-        client-secret: ${{secrets.SPN}}
+        client-secret: ${{secrets.CLIENT_SECRET}}
         tenant-id: ${{vars.TENANT_ID}}
         solution-name: ${{ inputs.solution_name }}
         managed: true
@@ -119,7 +119,7 @@ jobs:
       with:
         environment-url: ${{vars.ENVIRONMENT_URL}}
         app-id: ${{vars.CLIENT_ID}}
-        client-secret: ${{secrets.SPN}}
+        client-secret: ${{secrets.CLIENT_SECRET}}
         tenant-id: ${{vars.TENANT_ID}}
         solution-file: PowerPlatform/${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
