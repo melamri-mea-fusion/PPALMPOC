@@ -15,9 +15,6 @@ jobs:
     with:
       solution_name: PPALMPOC
       BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
-      PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
-      CLIENT_ID: ${{vars.CLIENT_ID}}
-      TENANT_ID: ${{vars.TENANT_ID}}
       ENVIRONMENT: UAT
     secrets:
       CLIENT_SECRET: ${{secrets.SPN}}
@@ -42,9 +39,6 @@ jobs:
     with:
       solution_name: PPALMPOC
       BUILD_ENVIRONMENT_URL: 'https://org158aa323.crm4.dynamics.com'
-      PRODUCTION_ENVIRONMENT_URL: ${{vars.ENVIRONMENT_URL}}
-      CLIENT_ID: ${{vars.CLIENT_ID}}
-      TENANT_ID: ${{vars.TENANT_ID}}
       ENVIRONMENT: PROD
     secrets:
       CLIENT_SECRET: ${{secrets.SPN}}
