@@ -65,10 +65,17 @@ jobs:
         solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
         solution-type: 'Unmanaged'
         overwrite-files: true
-
-    - name: branch-solution, prepare it for a PullRequest
-      uses: microsoft/powerplatform-actions/branch-solution@v1
-      with:
-        solution-folder: ${{ github.event.inputs.solution_folder}}/${{ github.event.inputs.solution_name }}
-        solution-target-folder: PowerPlatform/${{ github.event.inputs.solution_target_folder}}/${{ github.event.inputs.solution_name }}
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: branch and prepare for pull request
+      run: |
+        $guid = [System.Guid]::NewGuid()
+        $guidString = $guid.ToString("D")
+        $branchName = "powerplatform-patch-" +  $guid
+        git checkout -b $branchName
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add .\PowerPlatform\*
+        git commit -m "generated"
+        git push -u origin $branchName
+      
+     
