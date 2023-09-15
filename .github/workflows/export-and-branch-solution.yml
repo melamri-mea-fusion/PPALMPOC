@@ -23,10 +23,7 @@ on:
        description: 'folder name to be created and checked in *do not change*'
        required: true
        default: solutions/
-env:
-  ENVIRONMENT_URL: 'https://org30b06aab.crm4.dynamics.com'
-  CLIENT_ID: '4bf59db1-3f93-48dc-a75c-d2a2e9a6ed75'
-  TENANT_ID: 'd57f6302-e7b3-487f-b17a-5f7f14c6228e'
+
 permissions:
   contents: write
 jobs:
@@ -42,10 +39,11 @@ jobs:
     - name: export-solution action
       uses: microsoft/powerplatform-actions/export-solution@v1
       with:
-        environment-url: ${{env.ENVIRONMENT_URL}}
-        app-id: ${{env.CLIENT_ID}}
+        ENVIRONMENT: DEV
+        environment-url: ${{vars.ENVIRONMENT_URL}}
+        app-id: ${{vars.CLIENT_ID}}
         client-secret: ${{secrets.SPN}}
-        tenant-id: ${{env.TENANT_ID}}
+        tenant-id: ${{vars.TENANT_ID}}
         solution-name: ${{ github.event.inputs.solution_name }}
         solution-output-file: ${{ github.event.inputs.solution_exported_folder}}/${{ github.event.inputs.solution_name }}.zip
 
