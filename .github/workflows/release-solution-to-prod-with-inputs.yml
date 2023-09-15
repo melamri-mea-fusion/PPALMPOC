@@ -126,5 +126,3 @@ jobs:
         solution-file: ${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
         publish-changes: true
-        use-deployment-settings-file: true
-        deployment-settings-file: "./deployment-setting/settings.json"
