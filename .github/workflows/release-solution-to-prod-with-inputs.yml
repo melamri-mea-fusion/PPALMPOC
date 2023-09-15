@@ -65,7 +65,13 @@ jobs:
         lfs: true
     - name: Power Platform Action Install
       uses: microsoft/powerplatform-actions/actions-install@v1
-
+    - name: DEBUG
+      run: |
+        echo "env url  ${{inputs.BUILD_ENVIRONMENT_URL}}" app-id ${{inputs.CLIENT_ID}}"
+        echo "app-id ${{inputs.CLIENT_ID}}"
+        echo "client-secret ${{ secrets.CLIENT_SECRET }}"
+        echo "tenant-id ${{inputs.TENANT_ID}}"
+        
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v1
       with:
