@@ -34,20 +34,7 @@ on:
       BUILD_ENVIRONMENT_URL:
         description: 'Build environment url.'
         type: string
-        required: true      
-      PRODUCTION_ENVIRONMENT_URL: 
-        description: 'Production environment url.'
-        type: string
-        required: true
-      CLIENT_ID: 
-        description: 'The client id'
-        type: string
-        required: true
-      TENANT_ID: 
-        description: 'The tenant id'
-        type: string
-        required: true
-      
+        required: true       
     secrets:
             CLIENT_SECRET:
               required: true
@@ -65,12 +52,6 @@ jobs:
         lfs: true
     - name: Power Platform Action Install
       uses: microsoft/powerplatform-actions/actions-install@v1
-    - name: DEBUG
-      run: |
-        echo "env url  ${{inputs.BUILD_ENVIRONMENT_URL}}" app-id ${{inputs.CLIENT_ID}}"
-        echo "app-id ${{inputs.CLIENT_ID}}"
-        echo "client-secret ${{ secrets.CLIENT_SECRET }}"
-        echo "tenant-id ${{inputs.TENANT_ID}}"
         
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v1
@@ -82,10 +63,10 @@ jobs:
     - name: Import solution as unmanaged to build env
       uses: microsoft/powerplatform-actions/import-solution@v1
       with:
-        environment-url: ${{inputs.BUILD_ENVIRONMENT_URL}}
-        app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ secrets.CLIENT_SECRET }} 
-        tenant-id: ${{inputs.TENANT_ID}}
+        environment-url: ${{vars.ENVIRONMENT_URL}}
+        app-id: ${{vars.CLIENT_ID}}
+        client-secret: ${{secrets.SPN}}
+        tenant-id: ${{vars.TENANT_ID}}
         solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
@@ -93,10 +74,10 @@ jobs:
     - name: Export solution as managed
       uses: microsoft/powerplatform-actions/export-solution@v1
       with:
-        environment-url: ${{inputs.BUILD_ENVIRONMENT_URL}}
-        app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ secrets.CLIENT_SECRET }} 
-        tenant-id: ${{inputs.TENANT_ID}}
+        environment-url: ${{vars.ENVIRONMENT_URL}}
+        app-id: ${{vars.CLIENT_ID}}
+        client-secret: ${{secrets.SPN}}
+        tenant-id: ${{vars.TENANT_ID}}
         solution-name: ${{ inputs.solution_name }}
         managed: true
         solution-output-file: PowerPlatform/${{ inputs.solution_shipping_folder}}/${{ inputs.solution_name }}_managed.zip
@@ -129,10 +110,10 @@ jobs:
     - name: Import solution to prod env
       uses: microsoft/powerplatform-actions/import-solution@v1
       with:
-        environment-url: ${{inputs.PRODUCTION_ENVIRONMENT_URL}}
-        app-id: ${{inputs.CLIENT_ID}}
-        client-secret: ${{ secrets.CLIENT_SECRET }} 
-        tenant-id: ${{inputs.TENANT_ID}}
+        environment-url: ${{vars.ENVIRONMENT_URL}}
+        app-id: ${{vars.CLIENT_ID}}
+        client-secret: ${{secrets.SPN}}
+        tenant-id: ${{vars.TENANT_ID}}
         solution-file: PowerPlatform/${{ inputs.solution_release_folder}}/${{ inputs.solution_name }}_managed.zip
         force-overwrite: true
         publish-changes: true
