@@ -24,6 +24,8 @@ jobs:
     runs-on: windows-latest
     environment: UAT
     steps: 
+       - name: Power Platform Action Install
+         uses: microsoft/powerplatform-actions/actions-install@v1
        - name: export-data
          uses: microsoft/powerplatform-actions/export-data@v1
          with:
@@ -49,6 +51,8 @@ jobs:
       runs-on: windows-latest
       environment: PROD
       steps: 
+       - name: Power Platform Action Install
+         uses: microsoft/powerplatform-actions/actions-install@v1
        - name: export-data
          uses: microsoft/powerplatform-actions/export-data@v1
          with:
