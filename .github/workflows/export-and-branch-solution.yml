@@ -55,7 +55,7 @@ jobs:
         client-secret: ${{secrets.SPN}}
         tenant-id: ${{vars.TENANT_ID}}
         schema-file: PowerPlatform/data/schema.xml
-        data-file: PowerPlatform/data/schema.zip
+        data-file: PowerPlatform/data/data.zip
         overwrite: true
         
     - name: unpack-solution action
