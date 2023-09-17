@@ -23,8 +23,13 @@ jobs:
     runs-on: windows-latest
     steps:
      - name: print
-       run: echo $pwd
-           
+       run: |
+         echo $pwd
+         cd ./PowerPlatform
+         ls
+         cd ./data
+         ls
+  
   
   UAT_DATA_MIGRATION: 
     needs: [UAT_Deployment]
