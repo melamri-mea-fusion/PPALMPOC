@@ -23,7 +23,7 @@ jobs:
     runs-on: windows-latest
     steps:
      - name: print
-       run: dir .\PowerPlatform\data\
+       run: dir ./PowerPlatform
            
   
   UAT_DATA_MIGRATION: 
@@ -40,7 +40,7 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: .\PowerPlatform\data\
+          data-file: ./PowerPlatform/data/*
 
   PROD_Deployment:
     needs: [UAT_DATA_MIGRATION]
@@ -67,4 +67,4 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: .\PowerPlatform\data\
+          data-file: ./PowerPlatform/data/*
