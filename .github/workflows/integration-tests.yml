@@ -19,4 +19,6 @@ jobs:
       - uses: actions/setup-dotnet@v3
       - name: install pac
         run: dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+      - name: create auth
+        run: pac auth create --url ${{vars.ENVIRONMENT_URL}} --username ${{secrets.testUser1Name}} --password ${{secrets.testUser1Password}}
         
