@@ -23,11 +23,7 @@ jobs:
     runs-on: windows-latest
     steps:
      - name: print
-       run: |
-         search_dir=PowerPlatform/data
-          for (entry in "$search_dir"/*){
-              echo "$entry"
-            }
+       run: dir .\PowerPlatform\data\
            
   
   UAT_DATA_MIGRATION: 
@@ -44,7 +40,7 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: PowerPlatform/data/*
+          data-file: .\PowerPlatform\data\
 
   PROD_Deployment:
     needs: [UAT_DATA_MIGRATION]
@@ -71,4 +67,4 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: PowerPlatform/data/
+          data-file: .\PowerPlatform\data\
