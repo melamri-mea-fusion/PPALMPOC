@@ -54,7 +54,7 @@ jobs:
         app-id: ${{vars.CLIENT_ID}}
         client-secret: ${{secrets.SPN}}
         tenant-id: ${{vars.TENANT_ID}}
-        schema-file: PowerPlatform/data/schema.xml
+        schema-file: PowerPlatform/data/data-schema.xml
         data-file: data.zip
         overwrite: true
         
