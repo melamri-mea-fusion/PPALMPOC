@@ -55,7 +55,7 @@ jobs:
         client-secret: ${{secrets.SPN}}
         tenant-id: ${{vars.TENANT_ID}}
         schema-file: PowerPlatform/data/schema.xml
-        data-file: PowerPlatform/data/data.zip
+        data-file: data.zip
         overwrite: true
         
     - name: unpack-solution action
@@ -68,6 +68,7 @@ jobs:
         
     - name: branch and prepare for pull request
       run: |
+        Expand-Archive -Path data.zip -DestinationPath PowerPlatform/data
         $guid = [System.Guid]::NewGuid()
         $guidString = $guid.ToString("D")
         $branchName = "powerplatform-patch-" +  $guid
