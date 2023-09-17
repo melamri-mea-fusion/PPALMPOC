@@ -60,4 +60,4 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: ./PowerPlatform/data/data.zip
+          data-file: PowerPlatform/data/data.zip
