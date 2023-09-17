@@ -18,21 +18,6 @@ jobs:
       ENVIRONMENT: UAT
     secrets:
       CLIENT_SECRET: ${{secrets.SPN}}
-
-  DEBUG:
-    runs-on: windows-latest
-    steps:
-     - uses: actions/checkout@v3
-       with:
-        lfs: true
-     - name: print
-       run: |
-         echo $pwd
-         cd ./PowerPlatform
-         ls
-         cd ./data
-         ls
-  
   
   UAT_DATA_MIGRATION: 
     needs: [UAT_Deployment]
@@ -41,6 +26,11 @@ jobs:
     steps: 
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
+       - uses: actions/checkout@v3
+         with:
+          lfs: true
+       - name : DEBUG
+         run:  ls ./PowerPlatform/data
        - name: import-data
          uses: microsoft/powerplatform-actions/import-data@v1
          with:
@@ -68,6 +58,11 @@ jobs:
       steps: 
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
+       - uses: actions/checkout@v3
+         with:
+          lfs: true
+       - name : DEBUG
+         run:  ls ./PowerPlatform/data
        - name: import-data
          uses: microsoft/powerplatform-actions/import-data@v1
          with:
