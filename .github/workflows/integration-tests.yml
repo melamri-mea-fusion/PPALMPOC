@@ -1,0 +1,27 @@
+name: integration-tests.
+
+on:
+  workflow_call:
+    inputs:
+      ENVIRONMENT:
+        required: true
+        type: string
+    secrets:
+            user1Email:
+              required: true
+            user1Password:
+              required: true
+
+jobs:
+  testExecution:
+    name: Run test plan
+    runs-on: windows-latest
+    environment: ${{ inputs.ENVIRONMENT }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          lfs: true
+      - uses: actions/setup-dotnet@v3
+      - name: install pac
+        run: dotnet tool install --global Microsoft.PowerApps.CLI.Tool
+        
