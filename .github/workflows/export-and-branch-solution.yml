@@ -68,7 +68,7 @@ jobs:
         
     - name: branch and prepare for pull request
       run: |
-        Expand-Archive -Path data.zip -DestinationPath PowerPlatform/data
+        Expand-Archive -Path data.zip -DestinationPath PowerPlatform/data -Force
         $guid = [System.Guid]::NewGuid()
         $guidString = $guid.ToString("D")
         $branchName = "powerplatform-patch-" +  $guid
