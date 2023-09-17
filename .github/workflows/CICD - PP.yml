@@ -26,14 +26,14 @@ jobs:
     steps: 
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
-       - name: export-data
+       - name: import-data
          uses: microsoft/powerplatform-actions/import-data@v1
          with:
           environment-url: ${{vars.ENVIRONMENT_URL}}
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: PowerPlatform/data
+          data-file: PowerPlatform/data/
 
   PROD_Deployment:
     needs: [UAT_DATA_MIGRATION]
@@ -53,11 +53,11 @@ jobs:
       steps: 
        - name: Power Platform Action Install
          uses: microsoft/powerplatform-actions/actions-install@v1
-       - name: export-data
+       - name: import-data
          uses: microsoft/powerplatform-actions/import-data@v1
          with:
           environment-url: ${{vars.ENVIRONMENT_URL}}
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: PowerPlatform/data/data.zip
+          data-file: PowerPlatform/data/
