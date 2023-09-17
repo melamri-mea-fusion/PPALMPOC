@@ -20,6 +20,6 @@ jobs:
       - name: install pac
         run: dotnet tool install --global Microsoft.PowerApps.CLI.Tool
       - name: create auth
-        run: pac auth create --url ${{vars.ENVIRONMENT_URL}} --username ${{secrets.TESTUSER1NAME}} --password ${{secrets.TESTUSER1PASSWORD}} --name ${{secrets.TESTUSER1NAME}}-${{vars.ENVIRONMENT_URL}} 
+        run: pac auth create --url ${{vars.ENVIRONMENT_URL}} --username ${{secrets.TESTUSER1NAME}} --password ${{secrets.TESTUSER1PASSWORD}} --name ${{secrets.TESTUSER1NAME}}-${{ inputs.ENVIRONMENT }} 
       - name: Run test suite 1
         run: pac tests run --environment-id ${{vars.ENVIRONMENT_ID}} --tenant ${{vars.TENANT_ID}} --test-plan-file ./PowerPlatform/test/plans/AccountCreation.fx.yaml
