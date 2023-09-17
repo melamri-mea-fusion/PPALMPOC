@@ -25,8 +25,9 @@ jobs:
      - name: print
        run: |
          search_dir=PowerPlatform/data
-          for (entry in "$search_dir"/*)
+          for (entry in "$search_dir"/*){
               echo "$entry"
+            }
            
   
   UAT_DATA_MIGRATION: 
