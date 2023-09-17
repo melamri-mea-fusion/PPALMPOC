@@ -18,6 +18,17 @@ jobs:
       ENVIRONMENT: UAT
     secrets:
       CLIENT_SECRET: ${{secrets.SPN}}
+
+  DEBUG:
+    runs-on: windows-latest
+    steps:
+     - name: print
+       run: |
+         search_dir=PowerPlatform/data/*
+          for entry in "$search_dir"/*
+            do
+              echo "$entry"
+            done
   
   UAT_DATA_MIGRATION: 
     needs: [UAT_Deployment]
@@ -33,7 +44,7 @@ jobs:
           app-id: ${{vars.CLIENT_ID}}
           client-secret: ${{secrets.SPN}}
           tenant-id: ${{vars.TENANT_ID}}
-          data-file: PowerPlatform/data/
+          data-file: PowerPlatform/data/*
 
   PROD_Deployment:
     needs: [UAT_DATA_MIGRATION]
