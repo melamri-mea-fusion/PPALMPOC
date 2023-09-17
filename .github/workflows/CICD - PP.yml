@@ -23,7 +23,7 @@ jobs:
     runs-on: windows-latest
     steps:
      - name: print
-       run: dir .
+       run: echo $pwd
            
   
   UAT_DATA_MIGRATION: 
