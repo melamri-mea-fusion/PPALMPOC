@@ -40,33 +40,24 @@ on:
               required: true
 
 jobs:
-  convert-to-managed:
+  deploy-solution-to-target-environment:
     runs-on: windows-latest
     # or you can say runs-on: ubuntu-latest
     env:
       RUNNER_DEBUG: 1
     environment: ${{ inputs.ENVIRONMENT }}
-    steps:
-    - name: DEBUG
-      run: |
-        echo "Environment-url: ${{vars.ENVIRONMENT_URL}}"
-        echo "app-id: ${{vars.CLIENT_ID}}"
-        echo "client-secret: ${{secrets.CLIENT_SECRET}}"
-        echo "tenant-id: ${{vars.TENANT_ID}}"
-        
+    steps:   
     - uses: actions/checkout@v3
       with:
         lfs: true
     - name: Power Platform Action Install
-      uses: microsoft/powerplatform-actions/actions-install@v1
-        
+      uses: microsoft/powerplatform-actions/actions-install@v1 
     - name: Pack solution
       uses: microsoft/powerplatform-actions/pack-solution@v1
       with:
         solution-folder: PowerPlatform/${{ inputs.solution_source_folder}}/${{ inputs.solution_name }}
         solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         solution-type: Unmanaged
-
     - name: Import solution as unmanaged to build env
       uses: microsoft/powerplatform-actions/import-solution@v1
       with:
@@ -77,7 +68,6 @@ jobs:
         solution-file: PowerPlatform/${{ inputs.solution_outbound_folder}}/${{ inputs.solution_name }}.zip
         force-overwrite: true
         publish-changes: true
-
     - name: Export solution as managed
       uses: microsoft/powerplatform-actions/export-solution@v1
       with:
@@ -88,33 +78,20 @@ jobs:
         solution-name: ${{ inputs.solution_name }}
         managed: true
         solution-output-file: PowerPlatform/${{ inputs.solution_shipping_folder}}/${{ inputs.solution_name }}_managed.zip
-
     - name: Upload the ready to ship solution to GH artifact store
       uses: actions/upload-artifact@v2
       with:
         name: managedSolutions
         path: PowerPlatform/${{ inputs.solution_shipping_folder}}/
-
-  release-to-staging:
-    needs: [ convert-to-managed ]
-    environment: ${{ inputs.ENVIRONMENT }}
-    runs-on: windows-latest
-    env:
-      RUNNER_DEBUG: 1
-
-    steps:
     - uses: actions/checkout@v3
       with:
         lfs: true
-
     - name: Fetch the ready to ship solution from GH artifact store
       uses: actions/download-artifact@v2
       with:
         name: managedSolutions
         path: PowerPlatform/${{ inputs.solution_release_folder}}
-    - name: Power Platform Action Install
-      uses: microsoft/powerplatform-actions/actions-install@v1
-    - name: Import solution to prod env
+    - name: Import solution to target env
       uses: microsoft/powerplatform-actions/import-solution@v1
       with:
         environment-url: ${{vars.ENVIRONMENT_URL}}
