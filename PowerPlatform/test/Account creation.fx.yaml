@@ -1,0 +1,42 @@
+testSuite:
+  testSuiteName: Account creation
+  testSuiteDescription: ''
+  persona: User1
+  appLogicalName: cr2c4_almalmdemocanvasapp_81e6d
+  appId: ''
+  onTestCaseStart: ""
+  onTestCaseComplete: ""
+  onTestSuiteComplete: ""
+  networkRequestMocks: 
+  testCases:
+  - testCaseName: 'Case #1'
+    testCaseDescription: ''
+    testSteps: |
+      = 
+      Set(accountName, "TEST Account" & Now());
+      Select('NewRecordAddIcon1');
+      SetProperty('DataCardValue1'.Text, accountName);
+      SetProperty('DataCardValue6'.SelectedItems, Table({'cr2c4_region':"Oceania",'cr2c4_regionid':"b0380fd2-aa53-ee11-be6e-000d3ad7a5a5"}));
+      Select('DataCardValue6');
+      SetProperty('DataCardValue7'.SelectedItems, Table({'cr2c4_countryid':"04fdf9ec-aa53-ee11-be6e-000d3add5311",'cr2c4_name':"Fiji",'cr2c4_Region':{'cr2c4_region':"Oceania",'cr2c4_regionid':"b0380fd2-aa53-ee11-be6e-000d3ad7a5a5"}}));
+      Select('DataCardValue7');
+      Select('SubmitFormButton1');
+      Assert(CountIf(Accounts,'Account Name' = accountName) = 1);
+testSettings:
+  filePath: 
+  browserConfigurations:
+  - browser: Chromium
+    device: 
+    screenWidth: 0
+    screenHeight: 0
+  locale: en-US
+  recordVideo: true
+  headless: true
+  enablePowerFxOverlay: false
+  timeout: 30000
+environmentVariables:
+  filePath: 
+  users:
+  - personaName: User1
+    emailKey: user1Email
+    passwordKey: user1Password
