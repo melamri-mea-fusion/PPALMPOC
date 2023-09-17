@@ -1,16 +1,11 @@
 name: integration-tests
 
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
       ENVIRONMENT:
         required: true
         type: string
-    secrets:
-            user1Email:
-              required: true
-            user1Password:
-              required: true
 
 jobs:
   testExecution:
