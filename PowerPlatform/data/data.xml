@@ -1,5 +1,5 @@
 
-<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2023-09-17T13:34:48.6207377Z">
+<entities xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" timestamp="2023-09-22T15:46:43.6088234Z">
   <entity name="cr2c4_region" displayname="Region">
     <records>
       <record id="aa380fd2-aa53-ee11-be6e-000d3ad7a5a5">
@@ -105,21 +105,6 @@
   </entity>
   <entity name="cr2c4_country" displayname="Country">
     <records>
-      <record id="80fcf9ec-aa53-ee11-be6e-000d3add5311">
-        <field name="cr2c4_countryid" value="80fcf9ec-aa53-ee11-be6e-000d3add5311" />
-        <field name="createdby" value="d9ed255a-af46-ee11-be6e-000d3ad995e4" lookupentity="systemuser" lookupentityname="Mehdi El Amri" />
-        <field name="createdon" value="2023-09-15T09:33:38.0000000Z" />
-        <field name="importsequencenumber" value="4" />
-        <field name="modifiedby" value="d9ed255a-af46-ee11-be6e-000d3ad995e4" lookupentity="systemuser" lookupentityname="Mehdi El Amri" />
-        <field name="modifiedon" value="2023-09-15T09:33:38.0000000Z" />
-        <field name="cr2c4_name" value="Afghanistan" />
-        <field name="ownerid" value="d9ed255a-af46-ee11-be6e-000d3ad995e4" lookupentity="systemuser" lookupentityname="Mehdi El Amri" />
-        <field name="owningbusinessunit" value="653a2b54-af46-ee11-be6e-000d3ad995e4" lookupentity="businessunit" lookupentityname="org30b06aab" />
-        <field name="owninguser" value="d9ed255a-af46-ee11-be6e-000d3ad995e4" lookupentity="systemuser" />
-        <field name="cr2c4_region" value="aa380fd2-aa53-ee11-be6e-000d3ad7a5a5" lookupentity="cr2c4_region" lookupentityname="Asia" />
-        <field name="statecode" value="0" />
-        <field name="statuscode" value="1" />
-      </record>
       <record id="82fcf9ec-aa53-ee11-be6e-000d3add5311">
         <field name="cr2c4_countryid" value="82fcf9ec-aa53-ee11-be6e-000d3add5311" />
         <field name="createdby" value="d9ed255a-af46-ee11-be6e-000d3ad995e4" lookupentity="systemuser" lookupentityname="Mehdi El Amri" />
